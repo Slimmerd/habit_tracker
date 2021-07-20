@@ -4,13 +4,15 @@ import 'package:habit_tracker/constants/colors.dart';
 import 'package:habit_tracker/models/todo_category_model.dart';
 import 'package:habit_tracker/providers/todo_provider.dart';
 import 'package:habit_tracker/widgets/todos/create_todo_bottomsheet.dart';
-import 'package:habit_tracker/widgets/todos/todo_card.dart';
+import 'package:habit_tracker/widgets/todos/todo_card/todo_card.dart';
 import 'package:provider/provider.dart';
 
 class TodoDetailScreen extends StatefulWidget {
   final TodoCategory todoCategory;
 
-  const TodoDetailScreen({Key? key, required this.todoCategory}): super(key: key);
+  const TodoDetailScreen({Key? key, required this.todoCategory})
+      : super(key: key);
+
   @override
   _TodoDetailScreenState createState() => _TodoDetailScreenState();
 }
@@ -23,7 +25,6 @@ class _TodoDetailScreenState extends State<TodoDetailScreen> {
   //   // allTasks = widget.todoCategory.tod
   //   super.initState();
   // }
-
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +51,8 @@ class _TodoDetailScreenState extends State<TodoDetailScreen> {
                 builder: (context) => Container(
                   padding: EdgeInsets.only(
                       bottom: MediaQuery.of(context).viewInsets.bottom),
-                  child: CreateTodoBottomSheet(todoCategory: widget.todoCategory),
+                  child:
+                      CreateTodoBottomSheet(todoCategory: widget.todoCategory),
                 ),
               ),
               child: Container(
@@ -208,8 +210,8 @@ class _TodoDetailScreenState extends State<TodoDetailScreen> {
                               child: LinearProgressIndicator(
                                 value: .25,
                                 backgroundColor: Colors.grey.withAlpha(50),
-                                valueColor:
-                                    AlwaysStoppedAnimation<Color>(AppColors.SelectedColor),
+                                valueColor: AlwaysStoppedAnimation<Color>(
+                                    AppColors.SelectedColor),
                               ),
                             ),
                             Padding(
@@ -227,7 +229,6 @@ class _TodoDetailScreenState extends State<TodoDetailScreen> {
                 ),
                 Consumer<TodoProvider>(
                   builder: (BuildContext context, value, Widget? child) {
-
                     return Expanded(
                       child: Hero(
                         transitionOnUserGestures: true,
@@ -276,7 +277,9 @@ class _TodoDetailScreenState extends State<TodoDetailScreen> {
                             // itemCount: 1,
                             itemCount: widget.todoCategory.todoList!.length,
                             itemBuilder: (BuildContext context, int id) {
-                              return TodoCard(todo: widget.todoCategory.todoList![id]);
+                              return TodoCard(
+                                  todo: widget.todoCategory.todoList![id],
+                                  todoCategory: widget.todoCategory);
                             },
                           ),
                         ),
@@ -284,7 +287,6 @@ class _TodoDetailScreenState extends State<TodoDetailScreen> {
                     );
                   },
                 ),
-
               ],
             ),
           ),
