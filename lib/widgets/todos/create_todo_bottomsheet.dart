@@ -26,7 +26,6 @@ class _CreateTodoBottomSheetState extends State<CreateTodoBottomSheet> {
     // TODO: implement build
     return Container(
       height: MediaQuery.of(context).size.height * 0.55,
-      color: Color(0xff707070),
       child: Container(
         decoration: BoxDecoration(
           color: Color(0xffe8e8e8),
