@@ -2,8 +2,6 @@ import 'package:habit_tracker/models/app_db.dart';
 import 'package:habit_tracker/models/todo_category_model.dart';
 import 'package:habit_tracker/models/todo_model.dart';
 
-import 'habit_model.dart';
-
 class TodosDBMethods {
   Future getAll() async {
     final db = await AppDatabase.instance.database;
@@ -25,7 +23,6 @@ class TodosDBMethods {
       print('GetAllTodos $data');
       todoCategories.add(todoCategory);
     });
-// ORDER BY ${HabitFields.createdTime} DESC
     return todoCategories;
   }
 
@@ -43,12 +40,11 @@ class TodosDBMethods {
     return todo.copy(id: id);
   }
 
-  Future update(Habit habit) async {
+  Future updateTodo(Todo todo) async{
     final db = await AppDatabase.instance.database;
-    final newResult = await db.update(tableHabits, habit.toJson(),
-        where: "id = ?", whereArgs: [habit.id]);
+    final id = await db.update(tableTodos, todo.toJson(), where: 'id = ?', whereArgs: [todo.id]);
 
-    return newResult;
+    return todo.copy(id: id);
   }
 
   Future dayComplete(Todo todo) async {
@@ -57,7 +53,6 @@ class TodosDBMethods {
     var newResult =
         await db.query(tableTodos, where: "id = ?", whereArgs: [todo.id]);
 
-    // print(dateString);
     print(newResult);
 
     if (todo.isCompleted == 0) {

@@ -19,6 +19,7 @@ class TodoProvider extends ChangeNotifier {
 
   Future<void> addCategoryTodo(TodoCategory todoCategory) async {
     await db.createTodoCategory(todoCategory).then((value) {
+      //todo remove todoCategory
       _todoCategories.add(value);
       notifyListeners();
     });
@@ -26,8 +27,17 @@ class TodoProvider extends ChangeNotifier {
 
   Future<void> addTodo(Todo todo, TodoCategory todoCategory) async {
     await db.createTodo(todo).then((value) {
+      //todo remove todoCategory
       todoCategory.todoList!.add(value);
       // _todoCategories.where((element) => element.id == todo.categoryID).todoList.add(value);
+      notifyListeners();
+    });
+  }
+
+  Future<void> updateTodo(Todo todo) async{
+    await db.updateTodo(todo).then((value){
+      var categoryIndex = _todoCategories.indexWhere((element) => element.id == todo.categoryID);
+      _todoCategories[categoryIndex].todoList![_todoCategories[categoryIndex].todoList!.indexWhere((element) => element.id == todo.id)] = todo;
       notifyListeners();
     });
   }
