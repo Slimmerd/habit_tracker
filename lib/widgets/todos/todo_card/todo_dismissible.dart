@@ -1,29 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:habit_tracker/constants/colors.dart';
-import 'package:habit_tracker/models/todo_category_model.dart';
 import 'package:habit_tracker/models/todo_model.dart';
-import 'package:habit_tracker/providers/todo_provider.dart';
-import 'package:provider/provider.dart';
 
 class TodoDismissible extends StatelessWidget {
   final Todo todo;
-  final TodoCategory todoCategory;
+  final Function deleteFunction;
   final Widget child;
 
   TodoDismissible(
       {Key? key,
       required this.todo,
-      required this.child,
-      required this.todoCategory});
+      required this.child, required this.deleteFunction,
+     });
 
   @override
   Widget build(BuildContext context) {
     return Dismissible(
       key: ObjectKey(todo.id),
       direction: DismissDirection.endToStart,
-      onDismissed: (DismissDirection direction) =>
-          Provider.of<TodoProvider>(context, listen: false)
-              .deleteTodo(todo, todoCategory),
+      onDismissed: (DismissDirection direction) => deleteFunction(),
       background: Container(
         alignment: Alignment.centerRight,
         padding: EdgeInsets.symmetric(horizontal: 20),

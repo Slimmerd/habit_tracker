@@ -30,12 +30,18 @@ class _TodoCardState extends State<TodoCard> {
           padding: EdgeInsets.only(
               bottom: MediaQuery.of(context).viewInsets.bottom),
           child:
-          TodoOpenBottomSheet(todo: widget.todo),
+          TodoOpenBottomSheet(todo: widget.todo, deleteFunction: () => {
+            Provider.of<TodoProvider>(context, listen: false)
+                .deleteTodo(widget.todo, widget.todoCategory),
+          },),
         ),
       ),
       child: TodoDismissible(
         todo: widget.todo,
-        todoCategory: widget.todoCategory,
+        deleteFunction: () =>{
+          Provider.of<TodoProvider>(context, listen: false)
+              .deleteTodo(widget.todo, widget.todoCategory),
+        },
         child: Container(
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(14),
