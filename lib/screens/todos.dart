@@ -58,31 +58,6 @@ class _TodosScreenState extends State<TodosScreen> {
               ),
             ),
           ),
-          Material(
-            color: Colors.transparent,
-            child: InkWell(
-              onTap: () =>
-                  Provider.of<TodoProvider>(context, listen: false).deleteAllTodoCategories(),
-              child: Container(
-                padding: EdgeInsets.all(9.0),
-                margin: EdgeInsets.only(right: 10),
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Color(0xff6f1bff),
-                  boxShadow: [
-                    BoxShadow(
-                        color: Color(0xff6f1bff),
-                        offset: Offset(0, 3),
-                        blurRadius: 5.0),
-                  ],
-                ),
-                child: Icon(
-                  Icons.delete,
-                  color: Colors.white,
-                ),
-              ),
-            ),
-          ),
         ],
       ),
       backgroundColor: Color(0xff131b26),
