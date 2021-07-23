@@ -3,6 +3,7 @@ import 'package:habit_tracker/providers/habit_provider.dart';
 import 'package:habit_tracker/providers/todo_provider.dart';
 import 'package:habit_tracker/screens/details.dart';
 import 'package:habit_tracker/screens/home.dart';
+import 'package:habit_tracker/screens/settings.dart';
 import 'package:habit_tracker/screens/todos.dart';
 import 'package:habit_tracker/widgets/bottom_nav_bar.dart';
 import 'package:provider/provider.dart';
@@ -61,6 +62,7 @@ class _AppState extends State<App> {
   final List<Widget> _children = [
     Home(),
     TodosScreen(),
+    SettingsScreen(),
   ];
 
   @override
