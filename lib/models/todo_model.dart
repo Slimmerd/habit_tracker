@@ -34,7 +34,8 @@ class Todo {
         TodoFields.name: name,
         TodoFields.categoryID: categoryID,
         TodoFields.isCompleted: isCompleted,
-        // TodoFields.due: due?.toIso8601String().substring(0, 10),
+        TodoFields.due: due?.toIso8601String(),
+        TodoFields.notes: notes != null ? notes : '',
         TodoFields.createdTime: createdTime.toIso8601String().substring(0, 10)
       };
 
@@ -64,6 +65,7 @@ class Todo {
         isCompleted: json[TodoFields.isCompleted] as int,
         notes: json[TodoFields.notes] as String?,
         createdTime: DateTime.parse(json[TodoFields.createdTime] as String),
+        due: DateTime.parse(json[TodoFields.due] as String),
         categoryID: json[TodoFields.categoryID] as int,
       );
 }
