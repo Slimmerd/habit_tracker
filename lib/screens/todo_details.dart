@@ -18,218 +18,222 @@ class TodoDetailScreen extends StatefulWidget {
 }
 
 class _TodoDetailScreenState extends State<TodoDetailScreen> {
-  // @override
-  // void initState() {
-  //   // print(widget.todoCategory.toJson());
-  //   // print(widget.todoCategory.todoList);
-  //   // allTasks = widget.todoCategory.tod
-  //   super.initState();
-  // }
+  int? completedTasks;
+  double? percentage;
+
+  @override
+  void initState() {
+    completedTasks = widget.todoCategory.todoList!.where((element) => element.isCompleted == 1).toList().length;
+    percentage = (completedTasks! / widget.todoCategory.todoList!.length);
+    // print(widget.todoCategory.toJson());
+    // print(widget.todoCategory.todoList);
+    // allTasks = widget.todoCategory.tod
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return Stack(
-      children: <Widget>[
-        Hero(
-          tag: "_background",
-          child: Container(
-            decoration: BoxDecoration(
-              color: AppColors.BackgroundMainColor,
-              borderRadius: BorderRadius.circular(0.0),
-            ),
-          ),
-        ),
-        Scaffold(
-          floatingActionButton: Material(
-            color: Colors.transparent,
-            child: InkWell(
-              customBorder: CircleBorder(),
-              onTap: () => showModalBottomSheet(
-                context: context,
-                isScrollControlled: true,
-                builder: (context) => Container(
-                  padding: EdgeInsets.only(
-                      bottom: MediaQuery.of(context).viewInsets.bottom),
-                  child:
-                      CreateTodoBottomSheet(todoCategory: widget.todoCategory),
-                ),
-              ),
+    return Consumer<TodoProvider>(
+      builder: (BuildContext context, value, Widget? child) {
+        return  Stack(
+          children: <Widget>[
+            Hero(
+              tag: "_background",
               child: Container(
-                padding: EdgeInsets.all(9.0),
                 decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Color(0xff6f1bff),
-                  boxShadow: [
-                    BoxShadow(
-                        color: Color(0xff6f1bff),
-                        offset: Offset(0, 3),
-                        blurRadius: 5.0),
-                  ],
-                ),
-                child: Icon(
-                  Icons.add,
-                  color: Colors.white,
+                  color: AppColors.BackgroundMainColor,
+                  borderRadius: BorderRadius.circular(0.0),
                 ),
               ),
             ),
-          ),
-          backgroundColor: AppColors.BackgroundMainColor,
-          appBar: AppBar(
-            brightness: Brightness.dark,
-            backgroundColor: Colors.transparent,
-            elevation: 0.0,
-            leading: Hero(
-              tag: "_backIcon",
-              child: Material(
+            Scaffold(
+              floatingActionButton: Material(
                 color: Colors.transparent,
-                type: MaterialType.transparency,
-                child: IconButton(
-                  icon: Icon(Icons.arrow_back),
-                  color: AppColors.MainText,
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                ),
-              ),
-            ),
-            actions: <Widget>[
-              Hero(
-                tag: "_more_vert",
-                child: Material(
-                  color: Colors.transparent,
-                  type: MaterialType.transparency,
-                  child: PopupMenuButton(
-                    icon: Icon(
-                      Icons.more_vert,
-                      color: AppColors.MainText,
+                child: InkWell(
+                  customBorder: CircleBorder(),
+                  onTap: () => showModalBottomSheet(
+                    context: context,
+                    isScrollControlled: true,
+                    builder: (context) => Container(
+                      padding: EdgeInsets.only(
+                          bottom: MediaQuery.of(context).viewInsets.bottom),
+                      child:
+                      CreateTodoBottomSheet(todoCategory: widget.todoCategory),
                     ),
-                    itemBuilder: (context) => [
-                      PopupMenuItem(
-                        child: Text("Edit Color"),
-                        value: 'TodoCardSettings.edit_color',
-                      ),
-                      PopupMenuItem(
-                        child: Text("Delete"),
-                        value: 'TodoCardSettings.delete',
-                      ),
-                    ],
-                    onSelected: (setting) {
-                      switch (setting) {
-                        case 'TodoCardSettings.edit_color':
-                          print("edit color clicked");
-                          break;
-                        case 'TodoCardSettings.delete':
-                          print("delete clicked");
-                          break;
-                      }
-                    },
+                  ),
+                  child: Container(
+                    padding: EdgeInsets.all(9.0),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Color(0xff6f1bff),
+                      boxShadow: [
+                        BoxShadow(
+                            color: Color(0xff6f1bff),
+                            offset: Offset(0, 3),
+                            blurRadius: 5.0),
+                      ],
+                    ),
+                    child: Icon(
+                      Icons.add,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
-              )
-            ],
-          ),
-          body: Padding(
-            padding: EdgeInsets.only(left: 40.0, right: 40.0, top: 35.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              mainAxisSize: MainAxisSize.max,
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.only(bottom: 30.0),
-                  child: Align(
-                    alignment: Alignment.bottomLeft,
-                    child: Hero(
-                      tag: "_icon",
-                      child: Container(
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          border: Border.all(
-                              color: Colors.grey.withAlpha(70),
-                              style: BorderStyle.solid,
-                              width: 1.0),
+              ),
+              backgroundColor: AppColors.BackgroundMainColor,
+              appBar: AppBar(
+                brightness: Brightness.dark,
+                backgroundColor: Colors.transparent,
+                elevation: 0.0,
+                leading: Hero(
+                  tag: "_backIcon",
+                  child: Material(
+                    color: Colors.transparent,
+                    type: MaterialType.transparency,
+                    child: IconButton(
+                      icon: Icon(Icons.arrow_back),
+                      color: AppColors.MainText,
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ),
+                ),
+                actions: <Widget>[
+                  Hero(
+                    tag: "_more_vert",
+                    child: Material(
+                      color: Colors.transparent,
+                      type: MaterialType.transparency,
+                      child: PopupMenuButton(
+                        icon: Icon(
+                          Icons.more_vert,
+                          color: AppColors.MainText,
                         ),
-                        child: Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Icon(
-                            Icons.build,
-                            color: Color(widget.todoCategory.color),
+                        itemBuilder: (context) => [
+                          PopupMenuItem(
+                            child: Text("Edit Color"),
+                            value: 'TodoCardSettings.edit_color',
+                          ),
+                          PopupMenuItem(
+                            child: Text("Delete"),
+                            value: 'TodoCardSettings.delete',
+                          ),
+                        ],
+                        onSelected: (setting) {
+                          switch (setting) {
+                            case 'TodoCardSettings.edit_color':
+                              print("edit color clicked");
+                              break;
+                            case 'TodoCardSettings.delete':
+                              print("delete clicked");
+                              break;
+                          }
+                        },
+                      ),
+                    ),
+                  )
+                ],
+              ),
+              body: Padding(
+                padding: EdgeInsets.only(left: 40.0, right: 40.0, top: 35.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.max,
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.only(bottom: 30.0),
+                      child: Align(
+                        alignment: Alignment.bottomLeft,
+                        child: Hero(
+                          tag: "_icon",
+                          child: Container(
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              border: Border.all(
+                                  color: Colors.grey.withAlpha(70),
+                                  style: BorderStyle.solid,
+                                  width: 1.0),
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: Icon(
+                                Icons.build,
+                                color: Color(widget.todoCategory.color),
+                              ),
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(bottom: 12.0),
-                  child: Align(
-                    alignment: Alignment.bottomLeft,
-                    child: Hero(
-                      tag: "_number_of_tasks",
-                      child: Material(
-                        color: Colors.transparent,
-                        child: Text(
-                          // widget.todoObject.taskAmount().toString() +
-                          " Tasks",
-                          style: TextStyle(color: AppColors.GrayText),
-                          softWrap: false,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(bottom: 20.0),
-                  child: Align(
-                    alignment: Alignment.bottomLeft,
-                    child: Hero(
-                      tag: "_title",
-                      child: Material(
-                        color: Colors.transparent,
-                        child: Text(
-                          widget.todoCategory.name,
-                          style: TextStyle(
-                              fontSize: 30.0, color: AppColors.MainText),
-                          softWrap: false,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(bottom: 30.0),
-                  child: Align(
-                    alignment: Alignment.bottomLeft,
-                    child: Hero(
-                      tag: "_progress_bar",
-                      child: Material(
-                        color: Colors.transparent,
-                        child: Row(
-                          children: <Widget>[
-                            Expanded(
-                              child: LinearProgressIndicator(
-                                value: .25,
-                                backgroundColor: Colors.grey.withAlpha(50),
-                                valueColor: AlwaysStoppedAnimation<Color>(
-                                    AppColors.SelectedColor),
-                              ),
+                    Padding(
+                      padding: EdgeInsets.only(bottom: 12.0),
+                      child: Align(
+                        alignment: Alignment.bottomLeft,
+                        child: Hero(
+                          tag: "_number_of_tasks",
+                          child: Material(
+                            color: Colors.transparent,
+                            child: Text(
+                              '${widget.todoCategory.todoList!.length} Tasks',
+                              style: TextStyle(color: AppColors.GrayText),
+                              softWrap: false,
                             ),
-                            Padding(
-                              padding: EdgeInsets.only(left: 10.0),
-                              child: Text(
-                                (.25 * 100).round().toString() + "%",
-                                style: TextStyle(color: AppColors.MainText),
-                              ),
-                            )
-                          ],
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ),
-                Consumer<TodoProvider>(
-                  builder: (BuildContext context, value, Widget? child) {
-                    return Expanded(
+                    Padding(
+                      padding: EdgeInsets.only(bottom: 20.0),
+                      child: Align(
+                        alignment: Alignment.bottomLeft,
+                        child: Hero(
+                          tag: "_title",
+                          child: Material(
+                            color: Colors.transparent,
+                            child: Text(
+                              widget.todoCategory.name,
+                              style: TextStyle(
+                                  fontSize: 30.0, color: AppColors.MainText),
+                              softWrap: false,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(bottom: 30.0),
+                      child: Align(
+                        alignment: Alignment.bottomLeft,
+                        child: Hero(
+                          tag: "_progress_bar",
+                          child: Material(
+                            color: Colors.transparent,
+                            child: Row(
+                              children: <Widget>[
+                                Expanded(
+                                  child: LinearProgressIndicator(
+                                    value: percentage,
+                                    backgroundColor: Colors.grey.withAlpha(50),
+                                    valueColor: AlwaysStoppedAnimation<Color>(
+                                        AppColors.SelectedColor),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(left: 10.0),
+                                  child: Text(
+                                    (percentage! * 100).round().toString() + "%",
+                                    style: TextStyle(color: AppColors.MainText),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Expanded(
                       child: Hero(
                         transitionOnUserGestures: true,
                         tag: "just_a_test",
@@ -284,14 +288,14 @@ class _TodoDetailScreenState extends State<TodoDetailScreen> {
                           ),
                         ),
                       ),
-                    );
-                  },
+                    ),
+                  ],
                 ),
-              ],
-            ),
-          ),
-        )
-      ],
+              ),
+            )
+          ],
+        );
+      },
     );
   }
 }
