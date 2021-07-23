@@ -21,7 +21,7 @@ class _TodoCategoryItemState extends State<TodoCategoryItem> {
   void initState(){
     // allTasks = widget.todoCategory.todoList!.length;
     // int finishedTasks = widget.todoCategory.todoList!.where((element) => element.isCompleted == 1).toList().length;
-    // leftTasks = widget.todoCategory.todoList!.where((element) => element.isCompleted == 0).toList().length;
+    leftTasks = widget.todoCategory.todoList!.where((element) => element.isCompleted == 0).toList().length;
     // percent = (finishedTasks / leftTasks) >= 0 ? (finishedTasks / leftTasks) : 0;
 
     super.initState();
