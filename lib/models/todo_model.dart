@@ -65,7 +65,7 @@ class Todo {
         isCompleted: json[TodoFields.isCompleted] as int,
         notes: json[TodoFields.notes] as String?,
         createdTime: DateTime.parse(json[TodoFields.createdTime] as String),
-        due: DateTime.parse(json[TodoFields.due] as String),
+        due: DateTime.tryParse(json[TodoFields.due].toString()), //fix type string to optional
         categoryID: json[TodoFields.categoryID] as int,
       );
 }
