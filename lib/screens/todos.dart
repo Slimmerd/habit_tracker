@@ -26,34 +26,37 @@ class _TodosScreenState extends State<TodosScreen> {
               color: Colors.white,
             )),
         actions: [
-          Material(
-            color: Colors.transparent,
-            child: InkWell(
-              onTap: () => showModalBottomSheet(
-                context: context,
-                isScrollControlled: true,
-                builder: (context) => Container(
-                  padding: EdgeInsets.only(
-                      bottom: MediaQuery.of(context).viewInsets.bottom),
-                  child: CreateCategoryBottomSheet(),
+          Container(
+            margin: EdgeInsets.only(right: 10),
+            child: Material(
+              color: Colors.transparent,
+              child: InkWell(
+                customBorder: CircleBorder(),
+                onTap: () => showModalBottomSheet(
+                  context: context,
+                  isScrollControlled: true,
+                  builder: (context) => Container(
+                    padding: EdgeInsets.only(
+                        bottom: MediaQuery.of(context).viewInsets.bottom),
+                    child: CreateCategoryBottomSheet(),
+                  ),
                 ),
-              ),
-              child: Container(
-                padding: EdgeInsets.all(9.0),
-                margin: EdgeInsets.only(right: 10),
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Color(0xff6f1bff),
-                  boxShadow: [
-                    BoxShadow(
-                        color: Color(0xff6f1bff),
-                        offset: Offset(0, 3),
-                        blurRadius: 5.0),
-                  ],
-                ),
-                child: Icon(
-                  Icons.add,
-                  color: Colors.white,
+                child: Container(
+                  padding: EdgeInsets.all(9.0),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Color(0xff6f1bff),
+                    boxShadow: [
+                      BoxShadow(
+                          color: Color(0xff6f1bff),
+                          offset: Offset(0, 3),
+                          blurRadius: 5.0),
+                    ],
+                  ),
+                  child: Icon(
+                    Icons.add,
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ),
