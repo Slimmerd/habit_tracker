@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:habit_tracker/constants/colors.dart';
 import 'package:habit_tracker/models/todo_category_model.dart';
@@ -106,7 +107,7 @@ class _TodoCategoryItemState extends State<TodoCategoryItem> {
                                 ),
                                 child: Padding(
                                   padding: EdgeInsets.all(8.0),
-                                  child: Icon(Icons.build,
+                                  child: Icon(IconData(widget.todoCategory.icon, fontFamily: CupertinoIcons.iconFont, fontPackage: CupertinoIcons.iconFontPackage),
                                       color: Color(widget.todoCategory.color)
                                   ),
                                 ),
