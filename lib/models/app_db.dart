@@ -57,7 +57,7 @@ class AppDatabase {
     ${TodoCategoryFields.id} $idType,
     ${TodoCategoryFields.name} $textTypeNT,
     ${TodoCategoryFields.color} $integerType,
-    ${TodoCategoryFields.icon} $textTypeNT,
+    ${TodoCategoryFields.icon} $integerType,
     ${TodoCategoryFields.isArchived} $integerType,
     ${TodoCategoryFields.createdTime} $textType
     )
