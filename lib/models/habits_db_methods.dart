@@ -36,7 +36,7 @@ class HabitsDBMethods {
   Future update(Habit habit) async {
     final db = await AppDatabase.instance.database;
     final newResult = await db.update(tableHabits, habit.toJson(),
-        where: "id = ?", whereArgs: [habit.id]);
+        where: "_id = ?", whereArgs: [habit.id]);
 
     return newResult;
   }
@@ -77,6 +77,13 @@ class HabitsDBMethods {
 
   }
 
+  Future resetProgress(int id) async {
+    final db = await AppDatabase.instance.database;
+
+    db.rawDelete('''
+    DELETE FROM $tableHabitDates WHERE habitID = $id
+    ''');
+  }
 
 
 }
