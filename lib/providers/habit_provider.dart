@@ -24,6 +24,14 @@ class HabitProvider extends ChangeNotifier{
     });
   }
 
+  Future<void> update(Habit habit) async {
+    await db.update(habit).then((value){
+      var habitIndex = _habits.indexWhere((element) => element.id == habit.id);
+      _habits[habitIndex] = habit;
+      notifyListeners();
+    });
+  }
+
   Future<void> delete(Habit habit) async{
     await db.delete(habit.id!).then((value) {
       _habits.removeWhere((element) => element == habit);
@@ -35,6 +43,14 @@ class HabitProvider extends ChangeNotifier{
     await db.deleteAll().then((value) {
         _habits.clear();
         notifyListeners();
+    });
+  }
+
+  Future<void> resetProgress(Habit habit) async{
+    await db.resetProgress(habit.id!).then((value){
+      var habitIndex = _habits.indexWhere((element) => element.id == habit.id);
+      _habits[habitIndex].dayList!.clear();
+      notifyListeners();
     });
   }
 
