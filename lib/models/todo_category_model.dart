@@ -16,7 +16,7 @@ class TodoCategory {
   final int? id;
   final String name;
   final int color;
-  final String icon;
+  final int icon;
   final int? isArchived;
   final int? notificationId;
   late List<Todo>? todoList;
@@ -30,8 +30,7 @@ class TodoCategory {
       this.isArchived = 0,
       this.notificationId,
       required this.createdTime,
-      this.todoList
-      });
+      this.todoList});
 
   Map<String, Object?> toJson() => {
         TodoCategoryFields.id: id,
@@ -46,7 +45,7 @@ class TodoCategory {
   TodoCategory copy({
     int? id,
     String? name,
-    String? icon,
+    int? icon,
     int? color,
     int? notificationId,
     List<Todo>? todoList,
@@ -67,7 +66,7 @@ class TodoCategory {
         todoList: json[TodoCategoryFields.todoList] as List<Todo>?,
         createdTime:
             DateTime.parse(json[TodoCategoryFields.createdTime] as String),
-        icon: json[TodoCategoryFields.icon] as String,
+        icon: json[TodoCategoryFields.icon] as int,
         color: json[TodoCategoryFields.color] as int,
       );
 }
