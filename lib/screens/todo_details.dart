@@ -19,17 +19,17 @@ class TodoDetailScreen extends StatefulWidget {
 
 class _TodoDetailScreenState extends State<TodoDetailScreen> {
   int? completedTasks;
-  double? percentage;
+  double? percentage = 0;
 
-  @override
-  void initState() {
-    completedTasks = widget.todoCategory.todoList!.where((element) => element.isCompleted == 1).toList().length;
-    percentage = (completedTasks! / widget.todoCategory.todoList!.length);
-    // print(widget.todoCategory.toJson());
-    // print(widget.todoCategory.todoList);
-    // allTasks = widget.todoCategory.tod
-    super.initState();
-  }
+  // @override
+  // void initState() {
+  //   completedTasks = widget.todoCategory.todoList?.where((element) => element.isCompleted == 1).toList().length;
+  //   percentage = (completedTasks / widget.todoCategory.todoList!.length);
+  //   // print(widget.todoCategory.toJson());
+  //   // print(widget.todoCategory.todoList);
+  //   // allTasks = widget.todoCategory.tod
+  //   super.initState();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -158,10 +158,8 @@ class _TodoDetailScreenState extends State<TodoDetailScreen> {
                             ),
                             child: Padding(
                               padding: EdgeInsets.all(8.0),
-                              child: Icon(
-                                Icons.build,
-                                color: Color(widget.todoCategory.color),
-                              ),
+                              child: Icon(IconData(widget.todoCategory.icon, fontFamily: CupertinoIcons.iconFont, fontPackage: CupertinoIcons.iconFontPackage),
+                                color: Color(widget.todoCategory.color),),
                             ),
                           ),
                         ),
