@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:habit_tracker/constants/colors.dart';
 import 'package:habit_tracker/providers/habit_provider.dart';
-import 'package:habit_tracker/widgets/create_bottom_sheet.dart';
+import 'package:habit_tracker/widgets/create_habit_bottomsheet.dart';
 import 'package:habit_tracker/widgets/habits/habit_card/habit_item.dart';
 import 'package:provider/provider.dart';
 
@@ -27,7 +27,7 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin{
             builder: (context) => Container(
               padding: EdgeInsets.only(
                   bottom: MediaQuery.of(context).viewInsets.bottom),
-              child: CreateBottomSheet(),
+              child: CreateHabitBottomSheet(),
             ),
           ),
           child: Container(
