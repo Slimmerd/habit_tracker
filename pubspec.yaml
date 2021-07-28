@@ -35,6 +35,8 @@ dependencies:
   provider:
   flutter_datetime_picker: ^1.5.1
   flutter_local_notifications: ^6.0.0
+  flutter_iconpicker: ^3.0.2
+  flex_color_picker: ^2.1.2
 
 dev_dependencies:
   flutter_test:
