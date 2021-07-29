@@ -19,21 +19,6 @@ class _TodoCategoryItemState extends State<TodoCategoryItem> {
   int allTasks = 0;
 
   @override
-  void initState(){
-    // allTasks = widget.todoCategory.todoList!.length;
-    // int finishedTasks = widget.todoCategory.todoList!.where((element) => element.isCompleted == 1).toList().length;
-    leftTasks = widget.todoCategory.todoList!.where((element) => element.isCompleted == 0).toList().length;
-    // percent = (finishedTasks / leftTasks) >= 0 ? (finishedTasks / leftTasks) : 0;
-
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Container(
@@ -162,7 +147,7 @@ class _TodoCategoryItemState extends State<TodoCategoryItem> {
                         color: Colors.transparent,
                         child: Text(
 
-                                '$leftTasks Tasks',
+                                '${widget.todoCategory.todoList!.where((element) => element.isCompleted == 0).toList().length} Tasks',
                           style: TextStyle(color: AppColors.GrayText),
                           softWrap: false,
                         )),
