@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:habit_tracker/constants/colors.dart';
 import 'package:habit_tracker/models/todo_category_model.dart';
 import 'package:habit_tracker/models/todo_model.dart';
 import 'package:habit_tracker/providers/todo_provider.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class CreateTodoBottomSheet extends StatefulWidget {
@@ -16,20 +19,18 @@ class CreateTodoBottomSheet extends StatefulWidget {
 
 class _CreateTodoBottomSheetState extends State<CreateTodoBottomSheet> {
   late String _name;
-
-  // late String _icon;
-  // final int _color = AppColors.SelectedColor.value;
+  late String _notes;
+  DateTime? _due;
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Container(
-      height: MediaQuery.of(context).size.height * 0.55,
+      height: MediaQuery.of(context).size.height * 0.5,
       child: Container(
         decoration: BoxDecoration(
-          color: Color(0xffe8e8e8),
+          color: AppColors.BackgroundMainColor,
           borderRadius: BorderRadius.only(
               topRight: Radius.circular(30), topLeft: Radius.circular(30)),
         ),
@@ -46,51 +47,76 @@ class _CreateTodoBottomSheetState extends State<CreateTodoBottomSheet> {
                     Text(
                       'New todo',
                       style: TextStyle(
-                          // color: AppColors.Graphite,
+                          color: AppColors.MainText,
                           fontSize: 18,
                           fontWeight: FontWeight.w400),
                     ),
                   ],
                 ),
               ),
-              // Container(
-              //   margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              //   child: TextFormField(
-              //     decoration: InputDecoration(
-              //         border: OutlineInputBorder(),
-              //         labelText: 'Icon'
-              //     ),
-              //     onSaved: (String? value) {
-              //       _icon = value!;
-              //     },
-              //   ),
-              // ),
-
-              // TODO Color selector
-              // Container(
-              //   margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              //   child: TextFormField(
-              //     decoration: InputDecoration(
-              //         border: OutlineInputBorder(),
-              //         labelText: 'Color'
-              //     ),
-              //     onSaved: (String? value) {
-              //       _color = value!;
-              //     },
-              //   ),
-              // ),
-
               Container(
                 margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 child: TextFormField(
+                  style: TextStyle(color: AppColors.MainText),
                   decoration: InputDecoration(
-                      border: OutlineInputBorder(), labelText: 'Name'),
+                      border: OutlineInputBorder(
+                          borderSide:
+                              const BorderSide(color: Colors.grey, width: 1.0)),
+                      enabledBorder: const OutlineInputBorder(
+                        borderSide:
+                            const BorderSide(color: Colors.grey, width: 1.0),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: AppColors.SelectedColor)),
+                      hintText: 'Name',
+                      hintStyle: TextStyle(color: AppColors.MainText)),
                   onSaved: (String? value) {
                     _name = value!;
                   },
                 ),
               ),
-
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                child: TextFormField(
+                  style: TextStyle(color: AppColors.MainText),
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                          borderSide:
+                              const BorderSide(color: Colors.grey, width: 1.0)),
+                      enabledBorder: const OutlineInputBorder(
+                        borderSide:
+                            const BorderSide(color: Colors.grey, width: 1.0),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: AppColors.SelectedColor)),
+                      hintText: 'Notes',
+                      hintStyle: TextStyle(color: AppColors.MainText)),
+                  onSaved: (String? value) {
+                    _notes = value!;
+                  },
+                ),
+              ),
+              GestureDetector(
+                onTap: () {
+                  DatePicker.showDateTimePicker(context,
+                      minTime: DateTime(2010),
+                      maxTime: DateTime(2150),
+                      currentTime: DateTime.now(),
+                      onConfirm: (DateTime dueTime) {
+                    setState(() => _due = dueTime);
+                  });
+                },
+                child: Container(
+                    margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                    child: Text(
+                      _due != null
+                          ? DateFormat('d MMMM HH:mm').format(_due!)
+                          : 'Set due',
+                      style: TextStyle(color: AppColors.MainText),
+                    )),
+              ),
               Container(
                 padding: EdgeInsets.only(top: 20, left: 20),
                 child: Column(
@@ -105,10 +131,11 @@ class _CreateTodoBottomSheetState extends State<CreateTodoBottomSheet> {
 
                             _formKey.currentState!.save();
 
-                            print(_name);
                             final newCategoryTodo = Todo(
                                 name: _name,
+                                notes: _notes,
                                 createdTime: DateTime.now(),
+                                due: _due,
                                 categoryID: widget.todoCategory.id!);
 
                             await Provider.of<TodoProvider>(context,
