@@ -2,44 +2,46 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:habit_tracker/constants/colors.dart';
 import 'package:habit_tracker/models/todo_category_model.dart';
+import 'package:habit_tracker/providers/todo_provider.dart';
 import 'package:habit_tracker/screens/todo_details.dart';
+import 'package:habit_tracker/widgets/todos/edit_category_bottomsheet.dart';
+import 'package:provider/provider.dart';
 
-class TodoCategoryItem extends StatefulWidget{
+class TodoCategoryItem extends StatefulWidget {
   final TodoCategory todoCategory;
 
-  const TodoCategoryItem({Key? key, required this.todoCategory}): super(key: key);
+  const TodoCategoryItem({Key? key, required this.todoCategory})
+      : super(key: key);
 
   @override
   _TodoCategoryItemState createState() => _TodoCategoryItemState();
 }
 
 class _TodoCategoryItemState extends State<TodoCategoryItem> {
-  double percent = 0;
-  int leftTasks = 0;
-  int allTasks = 0;
-
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Container(
       margin: EdgeInsets.only(left: 20, bottom: 20),
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10.0),
-          boxShadow: [
-            BoxShadow(
-                color: Colors.black.withAlpha(70),
-                offset: Offset(3.0, 10.0),
-                blurRadius: 15.0)
-          ]),
+      decoration:
+          BoxDecoration(borderRadius: BorderRadius.circular(10.0), boxShadow: [
+        BoxShadow(
+            color: Colors.black.withAlpha(70),
+            offset: Offset(3.0, 10.0),
+            blurRadius: 15.0)
+      ]),
       height: 300.0,
       width: 260,
       child: InkWell(
         onTap: () {
           Navigator.of(context).push(
             PageRouteBuilder(
-                pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) => TodoDetailScreen(todoCategory: widget.todoCategory,),
-                transitionDuration: Duration(milliseconds: 1000), reverseTransitionDuration: Duration(milliseconds: 1000)
-            ),
+                pageBuilder: (BuildContext context, Animation<double> animation,
+                        Animation<double> secondaryAnimation) =>
+                    TodoDetailScreen(
+                      todoCategory: widget.todoCategory,
+                    ),
+                transitionDuration: Duration(milliseconds: 1000),
+                reverseTransitionDuration: Duration(milliseconds: 1000)),
           );
         },
         child: Stack(
@@ -74,8 +76,8 @@ class _TodoCategoryItemState extends State<TodoCategoryItem> {
                                 child: Container(
                                   height: 0,
                                   width: 0,
-                                  child:
-                                  Icon(Icons.arrow_back, color: Colors.transparent),
+                                  child: Icon(Icons.arrow_back,
+                                      color: Colors.transparent),
                                 ),
                               ),
                             ),
@@ -92,9 +94,12 @@ class _TodoCategoryItemState extends State<TodoCategoryItem> {
                                 ),
                                 child: Padding(
                                   padding: EdgeInsets.all(8.0),
-                                  child: Icon(IconData(widget.todoCategory.icon, fontFamily: CupertinoIcons.iconFont, fontPackage: CupertinoIcons.iconFontPackage),
-                                      color: Color(widget.todoCategory.color)
-                                  ),
+                                  child: Icon(
+                                      IconData(widget.todoCategory.icon,
+                                          fontFamily: CupertinoIcons.iconFont,
+                                          fontPackage:
+                                              CupertinoIcons.iconFontPackage),
+                                      color: Color(widget.todoCategory.color)),
                                 ),
                               ),
                             ),
@@ -106,35 +111,30 @@ class _TodoCategoryItemState extends State<TodoCategoryItem> {
                           child: Material(
                             color: Colors.transparent,
                             type: MaterialType.transparency,
-                            child: PopupMenuButton(
+                            child: IconButton(
                               icon: Icon(
                                 Icons.more_vert,
                                 color: Colors.grey,
                               ),
-                              itemBuilder: (context) => [
-                                PopupMenuItem(
-                                  child: Text("Edit Color"),
-                                  value:
-                                  'TodoCardSettings.edit_color',
+                              onPressed: () => showModalBottomSheet(
+                                context: context,
+                                isScrollControlled: true,
+                                builder: (context) => Container(
+                                  padding: EdgeInsets.only(
+                                      bottom: MediaQuery.of(context)
+                                          .viewInsets
+                                          .bottom),
+                                  child: CategoryEditBottomSheet(
+                                    todoCategory: widget.todoCategory,
+                                    deleteFunction: () => {
+                                      Provider.of<TodoProvider>(context,
+                                              listen: false)
+                                          .deleteTodoCategory(
+                                              widget.todoCategory),
+                                    },
+                                  ),
                                 ),
-                                PopupMenuItem(
-                                  child: Text("Delete"),
-                                  value: 'TodoCardSettings.delete',
-                                ),
-                              ],
-                              onSelected: (setting) {
-                                switch (setting) {
-                                  case 'TodoCardSettings.edit_color':
-                                    print("edit color clicked");
-                                    break;
-                                  case 'TodoCardSettings.delete':
-                                    print("delete clicked");
-                                    // setState(() {
-                                    //   todos.remove(todoObject);
-                                    // });
-                                    break;
-                                }
-                              },
+                              ),
                             ),
                           ),
                         ),
@@ -146,8 +146,7 @@ class _TodoCategoryItemState extends State<TodoCategoryItem> {
                     child: Material(
                         color: Colors.transparent,
                         child: Text(
-
-                                '${widget.todoCategory.todoList!.where((element) => element.isCompleted == 0).toList().length} Tasks',
+                          '${widget.todoCategory.todoList!.where((element) => element.isCompleted == 0).toList().length} Task(s) left',
                           style: TextStyle(color: AppColors.GrayText),
                           softWrap: false,
                         )),
@@ -160,14 +159,18 @@ class _TodoCategoryItemState extends State<TodoCategoryItem> {
                       child: Text(
                         widget.todoCategory.name,
                         style: TextStyle(
-                            color: AppColors.MainText,
-                            fontSize: 30.0),
+                            color: AppColors.MainText, fontSize: 30.0),
                         softWrap: false,
                       ),
                     ),
                   ),
                   Spacer(),
-                  Hero(tag: 'just_a_test', child: SizedBox(height: 1, width: 1,)),
+                  Hero(
+                      tag: '_todos_list',
+                      child: SizedBox(
+                        height: 1,
+                        width: 1,
+                      )),
                   Hero(
                     tag: "_progress_bar",
                     child: Material(
@@ -176,20 +179,37 @@ class _TodoCategoryItemState extends State<TodoCategoryItem> {
                         children: <Widget>[
                           Expanded(
                             child: LinearProgressIndicator(
-                              value: percent,
-                              backgroundColor:
-                              Colors.grey.withAlpha(50),
-                              valueColor:
-                              AlwaysStoppedAnimation<Color>(
+                              value: widget.todoCategory.todoList!.length > 0
+                                  ? (widget.todoCategory.todoList!
+                                          .where((element) =>
+                                              element.isCompleted == 1)
+                                          .toList()
+                                          .length /
+                                      widget.todoCategory.todoList!.length)
+                                  : 0,
+                              backgroundColor: Colors.grey.withAlpha(50),
+                              valueColor: AlwaysStoppedAnimation<Color>(
                                   Color(widget.todoCategory.color)),
                             ),
                           ),
                           Padding(
                             padding: EdgeInsets.only(left: 5.0),
                             child: Text(
-                              (percent * 100).round().toString() + "%",
-                              style: TextStyle(
-                                  color: AppColors.MainText),
+                              ((widget.todoCategory.todoList!.length > 0
+                                              ? (widget.todoCategory.todoList!
+                                                      .where((element) =>
+                                                          element.isCompleted ==
+                                                          1)
+                                                      .toList()
+                                                      .length /
+                                                  widget.todoCategory.todoList!
+                                                      .length)
+                                              : 0) *
+                                          100)
+                                      .round()
+                                      .toString() +
+                                  "%",
+                              style: TextStyle(color: AppColors.MainText),
                             ),
                           )
                         ],
