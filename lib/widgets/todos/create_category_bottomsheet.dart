@@ -4,6 +4,7 @@ import 'package:flutter_iconpicker/flutter_iconpicker.dart';
 import 'package:habit_tracker/constants/colors.dart';
 import 'package:habit_tracker/models/todo_category_model.dart';
 import 'package:habit_tracker/providers/todo_provider.dart';
+import 'package:habit_tracker/widgets/utils/color_picker_dialog.dart';
 import 'package:provider/provider.dart';
 
 class CreateCategoryBottomSheet extends StatefulWidget {
@@ -24,9 +25,6 @@ class _CreateCategoryBottomSheetState extends State<CreateCategoryBottomSheet> {
         iconPackMode: IconPack.cupertino);
 
     _icon = icon != null ? icon : null;
-    setState(() {});
-
-    debugPrint('Picked Icon:  $icon');
   }
 
   @override
@@ -113,7 +111,14 @@ class _CreateCategoryBottomSheetState extends State<CreateCategoryBottomSheet> {
                         final Color colorBeforeDialog = _color;
                         // Wait for the picker to close, if dialog was dismissed,
                         // then restore the color we had before it was opened.
-                        if (!(await colorPickerDialog())) {
+                        if (!(await ColorPickerDialog(
+                          context: context,
+                          onColorChanged: (Color color) {
+                            setState(() => _color = color);
+                          },
+                          initialColor: _color
+                        ).colorPickerDialog()
+                        )) {
                           setState(() {
                             _color = colorBeforeDialog;
                           });
@@ -168,54 +173,6 @@ class _CreateCategoryBottomSheetState extends State<CreateCategoryBottomSheet> {
           ),
         ),
       ),
-    );
-  }
-
-  Future<bool> colorPickerDialog() async {
-    return ColorPicker(
-      // Use the dialogPickerColor as start color.
-      color: _color,
-      // Update the dialogPickerColor using the callback.
-      onColorChanged: (Color color) => setState(() => _color = color),
-      width: 40,
-      height: 40,
-      borderRadius: 30,
-      spacing: 5,
-      runSpacing: 5,
-      wheelDiameter: 155,
-      heading: Text(
-        'Select color',
-        style: Theme.of(context).textTheme.subtitle1,
-      ),
-      subheading: Text(
-        'Select color shade',
-        style: Theme.of(context).textTheme.subtitle1,
-      ),
-      wheelSubheading: Text(
-        'Selected color and its shades',
-        style: Theme.of(context).textTheme.subtitle1,
-      ),
-      showMaterialName: true,
-      showColorName: true,
-      showColorCode: true,
-      copyPasteBehavior: const ColorPickerCopyPasteBehavior(
-        longPressMenu: true,
-      ),
-      materialNameTextStyle: Theme.of(context).textTheme.caption,
-      colorNameTextStyle: Theme.of(context).textTheme.caption,
-      colorCodeTextStyle: Theme.of(context).textTheme.caption,
-      pickersEnabled: const <ColorPickerType, bool>{
-        ColorPickerType.both: false,
-        ColorPickerType.primary: true,
-        ColorPickerType.accent: true,
-        ColorPickerType.bw: false,
-        ColorPickerType.custom: false,
-        ColorPickerType.wheel: true,
-      },
-    ).showPickerDialog(
-      context,
-      constraints:
-          const BoxConstraints(minHeight: 460, minWidth: 300, maxWidth: 320),
     );
   }
 }
