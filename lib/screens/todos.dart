@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:habit_tracker/constants/colors.dart';
 import 'package:habit_tracker/providers/todo_provider.dart';
 import 'package:habit_tracker/widgets/todos/category_card/category_item.dart';
 import 'package:habit_tracker/widgets/todos/create_category_bottomsheet.dart';
@@ -45,10 +46,10 @@ class _TodosScreenState extends State<TodosScreen> {
                   padding: EdgeInsets.all(9.0),
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: Color(0xff6f1bff),
+                    color: AppColors.SelectedColor,
                     boxShadow: [
                       BoxShadow(
-                          color: Color(0xff6f1bff),
+                          color: AppColors.SelectedColor,
                           offset: Offset(0, 3),
                           blurRadius: 5.0),
                     ],

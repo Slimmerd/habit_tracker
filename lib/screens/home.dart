@@ -34,10 +34,10 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin{
             padding: EdgeInsets.all(9.0),
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: Color(0xff6f1bff),
+              color: AppColors.SelectedColor,
               boxShadow: [
                 BoxShadow(
-                    color: Color(0xff6f1bff),
+                    color: AppColors.SelectedColor,
                     offset: Offset(0, 3),
                     blurRadius: 5.0),
               ],
