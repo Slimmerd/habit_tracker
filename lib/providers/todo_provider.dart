@@ -34,6 +34,14 @@ class TodoProvider extends ChangeNotifier {
     });
   }
 
+  Future<void> updateTodoCategory(TodoCategory todoCategory) async{
+    await db.updateTodoCategory(todoCategory).then((value){
+      var categoryIndex = _todoCategories.indexWhere((element) => element.id == todoCategory.id);
+      _todoCategories[categoryIndex] = todoCategory;
+      notifyListeners();
+    });
+  }
+
   Future<void> updateTodo(Todo todo) async{
     await db.updateTodo(todo).then((value){
       var categoryIndex = _todoCategories.indexWhere((element) => element.id == todo.categoryID);

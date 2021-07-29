@@ -33,6 +33,14 @@ class TodosDBMethods {
     return todoCategory.copy(id: id);
   }
 
+  Future updateTodoCategory(TodoCategory todoCategory) async{
+    final db = await AppDatabase.instance.database;
+    final id = await db.update(tableTodoCategory, todoCategory.toJson(), where: 'id = ?', whereArgs: [todoCategory.id]);
+
+    return todoCategory.copy(id: id);
+  }
+
+
   Future createTodo(Todo todo) async {
     final db = await AppDatabase.instance.database;
     final id = await db.insert(tableTodos, todo.toJson());
