@@ -46,7 +46,7 @@ class _TodoCardState extends State<TodoCard> {
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(14),
               color: AppColors.GrayLight),
-          margin: EdgeInsets.only(bottom: 20),
+          margin: EdgeInsets.symmetric(vertical: 10),
           padding: EdgeInsets.symmetric(vertical: 16, horizontal: 16),
           child: Row(
             mainAxisSize: MainAxisSize.max,
