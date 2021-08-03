@@ -20,7 +20,7 @@ class TodoCard extends StatefulWidget {
 }
 
 class _TodoCardState extends State<TodoCard> {
-  late String dateTest;
+  late String dateTest = '';
 
   @override
   void initState() {
@@ -34,18 +34,22 @@ class _TodoCardState extends State<TodoCard> {
     dateShow();
   }
 
-  void dateShow() {
-    DateTime currentDate =
-        widget.todo.due != null ? widget.todo.due! : DateTime.now();
+  Future dateShow() async {
+    DateTime? currentDate = widget.todo.due;
     DateTime _now = DateTime.now();
     DateTime today = DateTime(_now.year, _now.month, _now.day);
     String dateString;
 
+    if (widget.todo.due == null) {
+      //Todo refactor
+      return;
+    }
+
     DateTime currentDateDay =
-        DateTime(currentDate.year, currentDate.month, currentDate.day);
+        DateTime(currentDate!.year, currentDate.month, currentDate.day);
 
     if (currentDateDay.isBefore(today.subtract(Duration(days: 7)))) {
-      dateString = DateFormat.yMMMMEEEEd().format(currentDate);
+      dateString = DateFormat('d/M').format(currentDate);
     } else if (currentDateDay.isBefore(today)) {
       dateString = '${currentDateDay.difference(today).inDays.abs()}d ago';
     } else if (currentDateDay.isAtSameMomentAs(today)) {
@@ -107,37 +111,50 @@ class _TodoCardState extends State<TodoCard> {
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Flexible(
-                flex: 1,
-                child: SizedBox(
-                  height: 24,
-                  width: 24,
-                  child: Checkbox(
-                    activeColor: Color(Provider.of<TodoProvider>(context,
-                            listen: false)
-                        .todoCategories[
+              Expanded(
+                flex: 4,
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Flexible(
+                      child: Container(
+                        margin: EdgeInsets.only(right: 20),
+                        height: 24,
+                        width: 24,
+                        child: Checkbox(
+                          activeColor: Color(
+                              Provider.of<TodoProvider>(context, listen: false)
+                                  .todoCategories[Provider.of<TodoProvider>(
+                                          context,
+                                          listen: false)
+                                      .todoCategories
+                                      .indexWhere((element) =>
+                                          element.id == widget.todoCategory.id)]
+                                  .color),
+                          side:
+                              BorderSide(color: AppColors.MainText, width: 1.5),
+                          value: widget.todo.isCompleted == 0 ? false : true,
+                          onChanged: (bool? value) {
                             Provider.of<TodoProvider>(context, listen: false)
-                                .todoCategories
-                                .indexWhere((element) =>
-                                    element.id == widget.todoCategory.id)]
-                        .color),
-                    side: BorderSide(color: AppColors.MainText, width: 1.5),
-                    value: widget.todo.isCompleted == 0 ? false : true,
-                    onChanged: (bool? value) {
-                      Provider.of<TodoProvider>(context, listen: false)
-                          .todoCompleted(widget.todo);
-                    },
-                  ),
-                ),
-              ),
-
-              Flexible(
-                flex: 5,
-                child: Text(
-                  widget.todo.name,
-                  overflow: TextOverflow.fade,
-                  softWrap: false,
-                  style: TextStyle(color: AppColors.MainText, fontSize: 14.0),
+                                .todoCompleted(widget.todo);
+                          },
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 3,
+                      child: Text(
+                        widget.todo.name,
+                        overflow: TextOverflow.fade,
+                        softWrap: false,
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
+                          color: AppColors.MainText,
+                          fontSize: 14.0,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
 
@@ -146,7 +163,6 @@ class _TodoCardState extends State<TodoCard> {
               ///Due date -> Today
               ///On Russian show 14 дн
               Flexible(
-                flex: 2,
                 child: Text(dateTest,
                     softWrap: false,
                     style: TextStyle(color: AppColors.MainText, fontSize: 12)),
