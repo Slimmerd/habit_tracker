@@ -39,8 +39,8 @@ class _TodoCategoryItemState extends State<TodoCategoryItem> {
                 pageBuilder: (BuildContext context, Animation<double> animation,
                         Animation<double> secondaryAnimation) =>
                     TodoDetailScreen(todoCategory: widget.todoCategory),
-                transitionDuration: Duration(milliseconds: 1000),
-                reverseTransitionDuration: Duration(milliseconds: 1000)),
+                transitionDuration: Duration(milliseconds: 850),
+                reverseTransitionDuration: Duration(milliseconds: 850)),
           );
         },
         child: Stack(
