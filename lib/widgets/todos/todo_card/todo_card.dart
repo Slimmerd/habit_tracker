@@ -27,18 +27,27 @@ class _TodoCardState extends State<TodoCard> {
         context: context,
         isScrollControlled: true,
         builder: (context) => Container(
-          padding: EdgeInsets.only(
-              bottom: MediaQuery.of(context).viewInsets.bottom),
-          child:
-          TodoOpenBottomSheet(todo: widget.todo, deleteFunction: () => {
-            Provider.of<TodoProvider>(context, listen: false)
-                .deleteTodo(widget.todo, widget.todoCategory),
-          },),
+          padding:
+              EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+          child: TodoOpenBottomSheet(
+            todo: widget.todo,
+            deleteFunction: () => {
+              Provider.of<TodoProvider>(context, listen: false)
+                  .deleteTodo(widget.todo, widget.todoCategory),
+            },
+            color: Color(Provider.of<TodoProvider>(context, listen: false)
+                .todoCategories[
+                    Provider.of<TodoProvider>(context, listen: false)
+                        .todoCategories
+                        .indexWhere(
+                            (element) => element.id == widget.todoCategory.id)]
+                .color),
+          ),
         ),
       ),
       child: TodoDismissible(
         todo: widget.todo,
-        deleteFunction: () =>{
+        deleteFunction: () => {
           Provider.of<TodoProvider>(context, listen: false)
               .deleteTodo(widget.todo, widget.todoCategory),
         },
@@ -58,6 +67,14 @@ class _TodoCardState extends State<TodoCard> {
                   height: 24,
                   width: 24,
                   child: Checkbox(
+                    activeColor: Color(Provider.of<TodoProvider>(context,
+                            listen: false)
+                        .todoCategories[
+                            Provider.of<TodoProvider>(context, listen: false)
+                                .todoCategories
+                                .indexWhere((element) =>
+                                    element.id == widget.todoCategory.id)]
+                        .color),
                     side: BorderSide(color: AppColors.MainText, width: 1.5),
                     value: widget.todo.isCompleted == 0 ? false : true,
                     onChanged: (bool? value) {
