@@ -7,18 +7,21 @@ import 'package:habit_tracker/widgets/habits/stats_card/stats_card.dart';
 import 'package:habit_tracker/widgets/settings_habit_bottomsheet.dart';
 import 'package:provider/provider.dart';
 
-class DetailsScreen extends StatefulWidget {
+class HabitDetailsScreen extends StatefulWidget {
   @override
-  _DetailsScreenState createState() => _DetailsScreenState();
+  _HabitDetailsScreenState createState() => _HabitDetailsScreenState();
 }
 
-class _DetailsScreenState extends State<DetailsScreen> {
+class _HabitDetailsScreenState extends State<HabitDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     Habit habit = ModalRoute.of(context)!.settings.arguments as Habit;
 
     return Consumer<HabitProvider>(
       builder: (BuildContext context, value, Widget? child) {
+        Habit _habit = value.habits[value.habits
+            .indexWhere((element) => element.id == habit.id)];
+
         return Scaffold(
           backgroundColor: AppColors.BackgroundMainColor,
           appBar: AppBar(
@@ -26,7 +29,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
             brightness: Brightness.dark,
             backgroundColor: Colors.transparent,
             title: Text(
-              habit.title,
+              _habit.title,
               style: TextStyle(
                 fontSize: 25,
                 color: Colors.white,
@@ -44,7 +47,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                       builder: (context) => Container(
                           padding: EdgeInsets.only(
                               bottom: MediaQuery.of(context).viewInsets.bottom),
-                          child: SettingsHabitBottomSheet(habit: habit,))),
+                          child: SettingsHabitBottomSheet(habit: _habit))),
                   child: Container(
                     padding: EdgeInsets.all(5.0),
                     decoration: BoxDecoration(

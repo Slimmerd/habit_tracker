@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:habit_tracker/providers/habit_provider.dart';
 import 'package:habit_tracker/providers/todo_provider.dart';
-import 'package:habit_tracker/screens/details.dart';
+import 'package:habit_tracker/screens/habit_details.dart';
 import 'package:habit_tracker/screens/home.dart';
 import 'package:habit_tracker/screens/settings.dart';
 import 'package:habit_tracker/screens/todos.dart';
@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
       ),
       home: App(),
       routes: {
-        '/details': (context) => DetailsScreen(),
+        '/details': (context) => HabitDetailsScreen(),
         '/todos': (context) => TodosScreen()
       },
     );
