@@ -1,4 +1,5 @@
 import 'package:flex_color_picker/flex_color_picker.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconpicker/flutter_iconpicker.dart';
 import 'package:habit_tracker/constants/colors.dart';
@@ -23,39 +24,59 @@ class CategoryEditBottomSheet extends StatefulWidget {
 class _CategoryEditBottomSheetState extends State<CategoryEditBottomSheet> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   IconData? _icon;
+  late TodoCategory _todoCategory;
   late Color _color;
-
-  @override
-  initState() {
-    _color = Color(widget.todoCategory.color);
-    super.initState();
-  }
 
   _pickIcon() async {
     IconData? icon = await FlutterIconPicker.showIconPicker(context,
         iconPackMode: IconPack.cupertino);
 
-    _icon = icon != null ? icon : null;
+    // setState(() => _icon = icon != null ? icon: _icon);
+    updateTodo(null, icon, null);
+  }
+
+  _pickColor() async {
+    final Color colorBeforeDialog = _color;
+
+    if (!(await ColorPickerDialog(
+            context: context,
+            onColorChanged: (Color color) {
+              updateTodo(null, null, color);
+              setState(() => _color = color);
+            },
+            initialColor: _color)
+        .colorPickerDialog())) {
+      setState(() {
+        _color = colorBeforeDialog;
+      });
+    }
   }
 
   void updateTodo([String? name, IconData? icon, Color? color]) {
-    var _todoCategory = new TodoCategory(
-      id: widget.todoCategory.id,
-      name: name != null ? name : widget.todoCategory.name,
-      createdTime: widget.todoCategory.createdTime,
-      color: color != null ? color.value : widget.todoCategory.color,
-      icon: icon != null ? icon.codePoint : widget.todoCategory.icon,
-      todoList: widget.todoCategory.todoList
-    );
+    var _newTodoCategory = new TodoCategory(
+        id: widget.todoCategory.id,
+        name: name != null ? name : _todoCategory.name,
+        createdTime: _todoCategory.createdTime,
+        color: color != null ? color.value : _todoCategory.color,
+        icon: icon != null ? icon.codePoint : _todoCategory.icon,
+        todoList: _todoCategory.todoList);
 
-    Provider.of<TodoProvider>(context, listen: false).updateTodoCategory(_todoCategory);
+    Provider.of<TodoProvider>(context, listen: false)
+        .updateTodoCategory(_newTodoCategory);
   }
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
+
     return Consumer<TodoProvider>(
       builder: (BuildContext context, value, Widget? child) {
+        _todoCategory = value.todoCategories[value.todoCategories
+            .indexWhere((element) => element.id == widget.todoCategory.id)];
+        _color = Color(_todoCategory.color);
+        _icon = IconData(_todoCategory.icon,
+            fontFamily: CupertinoIcons.iconFont,
+            fontPackage: CupertinoIcons.iconFontPackage);
+
         return Container(
             height: MediaQuery.of(context).size.height * 0.3,
             child: Container(
@@ -84,10 +105,9 @@ class _CategoryEditBottomSheetState extends State<CategoryEditBottomSheet> {
                                     child: Container(
                                       height: 24,
                                       child: TextFormField(
-                                          initialValue:
-                                              widget.todoCategory.name,
+                                          initialValue: _todoCategory.name,
                                           style: TextStyle(
-                                              fontSize: 18,
+                                              fontSize: 24,
                                               fontWeight: FontWeight.w400,
                                               color: AppColors.MainText),
                                           decoration: InputDecoration(
@@ -132,49 +152,45 @@ class _CategoryEditBottomSheetState extends State<CategoryEditBottomSheet> {
                               child: Container(
                                 alignment: Alignment.centerLeft,
                                 margin: EdgeInsets.symmetric(vertical: 10),
-                                child: _icon != null
-                                    ? Icon(_icon)
-                                    : Text('Choose icon',
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text('Choose icon',
                                         style: TextStyle(
+                                            fontSize: 16,
                                             color: AppColors.MainText)),
+                                    Icon(
+                                      _icon,
+                                      color: Color(_todoCategory.color),
+                                      size: 44,
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
-                            Container(
-                              margin: EdgeInsets.symmetric(vertical: 10),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    'Choose color',
-                                    style: TextStyle(color: AppColors.MainText),
-                                  ),
-                                  ColorIndicator(
-                                    width: 44,
-                                    height: 44,
-                                    borderRadius: 4,
-                                    color: _color,
-                                    onSelectFocus: false,
-                                    onSelect: () async {
-                                      // Store current color before we open the dialog.
-                                      final Color colorBeforeDialog = _color;
-                                      // Wait for the picker to close, if dialog was dismissed,
-                                      // then restore the color we had before it was opened.
-                                      if (!(await ColorPickerDialog(
-                                              context: context,
-                                              onColorChanged: (Color color) {
-                                                updateTodo(null, null, color);
-                                                setState(() => _color = color);
-                                              },
-                                              initialColor: _color)
-                                          .colorPickerDialog())) {
-                                        setState(() {
-                                          _color = colorBeforeDialog;
-                                        });
-                                      }
-                                    },
-                                  ),
-                                ],
+                            GestureDetector(
+                              onTap: _pickColor,
+                              child: Container(
+                                margin: EdgeInsets.symmetric(vertical: 10),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Choose color',
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          color: AppColors.MainText),
+                                    ),
+                                    ColorIndicator(
+                                      width: 44,
+                                      height: 44,
+                                      borderRadius: 4,
+                                      color: _color,
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ],
