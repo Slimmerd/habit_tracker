@@ -144,8 +144,7 @@ class _CreateTodoBottomSheetState extends State<CreateTodoBottomSheet> {
 
                               await Provider.of<TodoProvider>(context,
                                       listen: false)
-                                  .addTodo(
-                                      newCategoryTodo, widget.todoCategory);
+                                  .addTodo(newCategoryTodo);
 
                               Navigator.pop(context);
                             },

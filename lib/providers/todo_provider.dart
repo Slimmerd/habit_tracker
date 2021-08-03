@@ -11,6 +11,7 @@ class TodoProvider extends ChangeNotifier {
   TodoProvider() : db = TodosDBMethods() {
     dbGet = db.getAll().then((value) {
       _todoCategories.addAll(value);
+
       notifyListeners();
     });
   }
@@ -19,33 +20,40 @@ class TodoProvider extends ChangeNotifier {
 
   Future<void> addCategoryTodo(TodoCategory todoCategory) async {
     await db.createTodoCategory(todoCategory).then((value) {
-      //todo remove todoCategory
       _todoCategories.add(value);
+
       notifyListeners();
     });
   }
 
-  Future<void> addTodo(Todo todo, TodoCategory todoCategory) async {
+  Future<void> addTodo(Todo todo) async {
     await db.createTodo(todo).then((value) {
-      //todo remove todoCategory
-      todoCategory.todoList!.add(value);
-      // _todoCategories.where((element) => element.id == todo.categoryID).todoList.add(value);
+      var categoryIndex = _todoCategories
+          .indexWhere((element) => element.id == todo.categoryID);
+      _todoCategories[categoryIndex].todoList!.add(value);
+
       notifyListeners();
     });
   }
 
-  Future<void> updateTodoCategory(TodoCategory todoCategory) async{
-    await db.updateTodoCategory(todoCategory).then((value){
-      var categoryIndex = _todoCategories.indexWhere((element) => element.id == todoCategory.id);
+  Future<void> updateTodoCategory(TodoCategory todoCategory) async {
+    await db.updateTodoCategory(todoCategory).then((value) {
+      var categoryIndex = _todoCategories
+          .indexWhere((element) => element.id == todoCategory.id);
       _todoCategories[categoryIndex] = todoCategory;
+
       notifyListeners();
     });
   }
 
-  Future<void> updateTodo(Todo todo) async{
-    await db.updateTodo(todo).then((value){
-      var categoryIndex = _todoCategories.indexWhere((element) => element.id == todo.categoryID);
-      _todoCategories[categoryIndex].todoList![_todoCategories[categoryIndex].todoList!.indexWhere((element) => element.id == todo.id)] = todo;
+  Future<void> updateTodo(Todo todo) async {
+    await db.updateTodo(todo).then((value) {
+      var categoryIndex = _todoCategories
+          .indexWhere((element) => element.id == todo.categoryID);
+      _todoCategories[categoryIndex].todoList![_todoCategories[categoryIndex]
+          .todoList!
+          .indexWhere((element) => element.id == todo.id)] = todo;
+
       notifyListeners();
     });
   }
@@ -54,6 +62,7 @@ class TodoProvider extends ChangeNotifier {
   Future<void> deleteTodoCategory(TodoCategory todoCategory) async {
     await db.deleteTodoCategory(todoCategory.id!).then((value) {
       _todoCategories.removeWhere((element) => element == todoCategory);
+
       notifyListeners();
     });
   }
@@ -61,20 +70,23 @@ class TodoProvider extends ChangeNotifier {
   Future<void> deleteAllTodoCategories() async {
     await db.deleteAllTodoCategories().then((value) {
       _todoCategories.clear();
+
       notifyListeners();
     });
   }
 
   ///Delete todos
-  Future<void> deleteTodo(Todo todo, TodoCategory todoCategory) async {
+  Future<void> deleteTodo(Todo todo) async {
     await db.deleteTodo(todo.id!).then((value) {
-      todoCategory.todoList!.remove(todo);
+      var categoryIndex = _todoCategories
+          .indexWhere((element) => element.id == todo.categoryID);
+      _todoCategories[categoryIndex].todoList!.remove(todo);
+
       notifyListeners();
     });
   }
 
   Future<void> todoCompleted(Todo todo) async {
-    // final String dateString = date.toString().substring(0, 10);
     final int? index = todo.isCompleted;
 
     db.dayComplete(todo).then((value) {

@@ -83,7 +83,7 @@ class _TodoCardState extends State<TodoCard> {
             todo: widget.todo,
             deleteFunction: () => {
               Provider.of<TodoProvider>(context, listen: false)
-                  .deleteTodo(widget.todo, widget.todoCategory),
+                  .deleteTodo(widget.todo),
             },
             color: Color(Provider.of<TodoProvider>(context, listen: false)
                 .todoCategories[
@@ -99,7 +99,7 @@ class _TodoCardState extends State<TodoCard> {
         todo: widget.todo,
         deleteFunction: () => {
           Provider.of<TodoProvider>(context, listen: false)
-              .deleteTodo(widget.todo, widget.todoCategory),
+              .deleteTodo(widget.todo),
         },
         child: Container(
           decoration: BoxDecoration(
