@@ -15,8 +15,39 @@ class TodosScreen extends StatefulWidget {
 class _TodosScreenState extends State<TodosScreen> {
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Scaffold(
+      floatingActionButton: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          customBorder: CircleBorder(),
+          onTap: () => showModalBottomSheet(
+            context: context,
+            isScrollControlled: true,
+            builder: (context) => Container(
+              padding: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).viewInsets.bottom),
+              child: CreateCategoryBottomSheet(),
+            ),
+          ),
+          child: Container(
+            padding: EdgeInsets.all(9.0),
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: AppColors.SelectedColor,
+              boxShadow: [
+                BoxShadow(
+                    color: AppColors.SelectedColor,
+                    offset: Offset(0, 3),
+                    blurRadius: 5.0),
+              ],
+            ),
+            child: Icon(
+              Icons.add,
+              color: Colors.white,
+            ),
+          ),
+        ),
+      ),
       appBar: AppBar(
         elevation: 0,
         brightness: Brightness.dark,
@@ -26,43 +57,6 @@ class _TodosScreenState extends State<TodosScreen> {
               fontSize: 25,
               color: Colors.white,
             )),
-        actions: [
-          Container(
-            margin: EdgeInsets.only(right: 10),
-            child: Material(
-              color: Colors.transparent,
-              child: InkWell(
-                customBorder: CircleBorder(),
-                onTap: () => showModalBottomSheet(
-                  context: context,
-                  isScrollControlled: true,
-                  builder: (context) => Container(
-                    padding: EdgeInsets.only(
-                        bottom: MediaQuery.of(context).viewInsets.bottom),
-                    child: CreateCategoryBottomSheet(),
-                  ),
-                ),
-                child: Container(
-                  padding: EdgeInsets.all(9.0),
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: AppColors.SelectedColor,
-                    boxShadow: [
-                      BoxShadow(
-                          color: AppColors.SelectedColor,
-                          offset: Offset(0, 3),
-                          blurRadius: 5.0),
-                    ],
-                  ),
-                  child: Icon(
-                    Icons.add,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ],
       ),
       backgroundColor: Color(0xff131b26),
       body: Container(
