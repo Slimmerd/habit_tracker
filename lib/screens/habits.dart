@@ -6,12 +6,12 @@ import 'package:habit_tracker/widgets/create_habit_bottomsheet.dart';
 import 'package:habit_tracker/widgets/habits/habit_card/habit_item.dart';
 import 'package:provider/provider.dart';
 
-class Home extends StatefulWidget {
+class HabitsScreen extends StatefulWidget {
   @override
-  _HomeState createState() => _HomeState();
+  _HabitsScreenState createState() => _HabitsScreenState();
 }
 
-class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin{
+class _HabitsScreenState extends State<HabitsScreen> with AutomaticKeepAliveClientMixin{
 
   @override
   Widget build(BuildContext context) {

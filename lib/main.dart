@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:habit_tracker/providers/habit_provider.dart';
 import 'package:habit_tracker/providers/todo_provider.dart';
 import 'package:habit_tracker/screens/habit_details.dart';
-import 'package:habit_tracker/screens/home.dart';
+import 'package:habit_tracker/screens/habits.dart';
 import 'package:habit_tracker/screens/settings.dart';
 import 'package:habit_tracker/screens/todos.dart';
 import 'package:habit_tracker/widgets/bottom_nav_bar.dart';
@@ -60,7 +60,7 @@ class _AppState extends State<App> {
   int _selectedIndex = 0;
 
   final List<Widget> _children = [
-    Home(),
+    HabitsScreen(),
     TodosScreen(),
     SettingsScreen(),
   ];
