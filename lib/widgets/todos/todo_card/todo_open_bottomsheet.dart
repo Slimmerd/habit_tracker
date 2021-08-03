@@ -7,11 +7,12 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class TodoOpenBottomSheet extends StatefulWidget {
+  final Color color;
   final Todo todo;
   final Function deleteFunction;
 
   TodoOpenBottomSheet(
-      {Key? key, required this.todo, required this.deleteFunction})
+      {Key? key, required this.todo, required this.deleteFunction, required this.color})
       : super(key: key);
 
   @override
@@ -23,10 +24,11 @@ class _TodoOpenBottomSheetState extends State<TodoOpenBottomSheet> {
   DateTime? dueDate;
 
   @override
-  void initState(){
+  void initState() {
     dueDate = widget.todo.due;
     super.initState();
   }
+
   void updateTodo([String? name, String? notes, DateTime? due]) {
     var _todo = new Todo(
       id: widget.todo.id,
@@ -47,7 +49,7 @@ class _TodoOpenBottomSheetState extends State<TodoOpenBottomSheet> {
     return Consumer<TodoProvider>(
       builder: (BuildContext context, value, Widget? child) {
         return Container(
-          height: MediaQuery.of(context).size.height * 0.3,
+          height: MediaQuery.of(context).size.height * 0.35,
           child: Container(
             decoration: BoxDecoration(
               color: AppColors.BackgroundMainColor,
@@ -66,7 +68,7 @@ class _TodoOpenBottomSheetState extends State<TodoOpenBottomSheet> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
-                          margin: const EdgeInsets.only(bottom: 10),
+                          margin: const EdgeInsets.only(bottom: 20),
                           child: Row(
                             children: [
                               Padding(
@@ -75,6 +77,7 @@ class _TodoOpenBottomSheetState extends State<TodoOpenBottomSheet> {
                                   height: 24,
                                   width: 24,
                                   child: Checkbox(
+                                    activeColor: widget.color,
                                     side: BorderSide(
                                         color: AppColors.MainText, width: 1.5),
                                     value: widget.todo.isCompleted == 0
@@ -98,7 +101,7 @@ class _TodoOpenBottomSheetState extends State<TodoOpenBottomSheet> {
                                           fontWeight: FontWeight.w400,
                                           color: AppColors.MainText),
                                       decoration: InputDecoration(
-                                        hintText: 'New task',
+                                        hintText: 'Task name',
                                         hintStyle: TextStyle(
                                             color: AppColors.GrayText),
                                         border: InputBorder.none,
@@ -144,7 +147,7 @@ class _TodoOpenBottomSheetState extends State<TodoOpenBottomSheet> {
                           ),
                           padding: const EdgeInsets.symmetric(
                               horizontal: 10, vertical: 2),
-                          margin: const EdgeInsets.only(bottom: 10),
+                          margin: const EdgeInsets.only(bottom: 20),
                           child: TextFormField(
                               style: TextStyle(color: AppColors.MainText),
                               expands: true,
@@ -170,17 +173,24 @@ class _TodoOpenBottomSheetState extends State<TodoOpenBottomSheet> {
                                 maxTime: DateTime(2150),
                                 currentTime: DateTime.now(),
                                 onConfirm: (DateTime dueTime) {
-                                  updateTodo(null, null, dueTime);
-                                  setState(() => dueDate = dueTime);
-                                }
-                            );
+                              updateTodo(null, null, dueTime);
+                              setState(() => dueDate = dueTime);
+                            });
                           },
                           child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 10),
+                            decoration: BoxDecoration(
+                                color: AppColors.GrayLight,
+                                borderRadius: BorderRadius.circular(14),
+                            ),
+                              width: double.infinity,
                               child: Text(
-                            dueDate != null ? DateFormat('d MMMM HH:mm').format(dueDate!) : 'Set due',
+                            dueDate != null
+                                ? DateFormat('d MMMM HH:mm').format(dueDate!)
+                                : 'Set due',
                             style: TextStyle(color: AppColors.MainText),
-                          )
-                          ),
+                          )),
                         ),
                       ],
                     ),

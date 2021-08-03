@@ -55,44 +55,53 @@ class _CreateTodoBottomSheetState extends State<CreateTodoBottomSheet> {
                 ),
               ),
               Container(
+                height: 50,
+                width: double.infinity,
                 margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
+                decoration: BoxDecoration(
+                  color: AppColors.GrayLight,
+                  borderRadius: BorderRadius.circular(14),
+                ),
                 child: TextFormField(
                   style: TextStyle(color: AppColors.MainText),
                   decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                          borderSide:
-                              const BorderSide(color: Colors.grey, width: 1.0)),
-                      enabledBorder: const OutlineInputBorder(
-                        borderSide:
-                            const BorderSide(color: Colors.grey, width: 1.0),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: AppColors.SelectedColor)),
                       hintText: 'Name',
-                      hintStyle: TextStyle(color: AppColors.MainText)),
+                      border: InputBorder.none,
+                      focusedBorder: InputBorder.none,
+                      enabledBorder: InputBorder.none,
+                      errorBorder: InputBorder.none,
+                      disabledBorder: InputBorder.none,
+                      hintStyle: TextStyle(color: AppColors.GrayText)),
                   onSaved: (String? value) {
                     _name = value!;
                   },
                 ),
               ),
               Container(
+                height: 100,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: AppColors.GrayLight,
+                  borderRadius: BorderRadius.circular(14),
+                ),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
                 margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 child: TextFormField(
                   style: TextStyle(color: AppColors.MainText),
+                  expands: true,
+                  minLines: null,
+                  maxLines: null,
                   decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                          borderSide:
-                              const BorderSide(color: Colors.grey, width: 1.0)),
-                      enabledBorder: const OutlineInputBorder(
-                        borderSide:
-                            const BorderSide(color: Colors.grey, width: 1.0),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: AppColors.SelectedColor)),
                       hintText: 'Notes',
-                      hintStyle: TextStyle(color: AppColors.MainText)),
+                      border: InputBorder.none,
+                      focusedBorder: InputBorder.none,
+                      enabledBorder: InputBorder.none,
+                      errorBorder: InputBorder.none,
+                      disabledBorder: InputBorder.none,
+                      hintStyle: TextStyle(color: AppColors.GrayText)),
                   onSaved: (String? value) {
                     _notes = value!;
                   },
@@ -109,52 +118,61 @@ class _CreateTodoBottomSheetState extends State<CreateTodoBottomSheet> {
                   });
                 },
                 child: Container(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10, vertical: 10),
                     margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                    decoration: BoxDecoration(
+                      color: AppColors.GrayLight,
+                      borderRadius: BorderRadius.circular(14),
+                    ),
                     child: Text(
                       _due != null
                           ? DateFormat('d MMMM HH:mm').format(_due!)
                           : 'Set due',
-                      style: TextStyle(color: AppColors.MainText),
+                      style: TextStyle(color: AppColors.GrayText),
                     )),
               ),
               Container(
-                padding: EdgeInsets.only(top: 20, left: 20),
+                padding: EdgeInsets.only(top: 10),
                 child: Column(
                   children: [
-                    Row(
-                      children: [
-                        ElevatedButton(
-                          onPressed: () async {
-                            if (!_formKey.currentState!.validate()) {
-                              return;
-                            }
+                    ElevatedButton(
+                      onPressed: () async {
+                        if (!_formKey.currentState!.validate()) {
+                          return;
+                        }
 
-                            _formKey.currentState!.save();
+                        _formKey.currentState!.save();
 
-                            final newCategoryTodo = Todo(
-                                name: _name,
-                                notes: _notes,
-                                createdTime: DateTime.now(),
-                                due: _due,
-                                categoryID: widget.todoCategory.id!);
+                        final newCategoryTodo = Todo(
+                            name: _name,
+                            notes: _notes,
+                            createdTime: DateTime.now(),
+                            due: _due,
+                            categoryID: widget.todoCategory.id!);
 
-                            await Provider.of<TodoProvider>(context,
-                                    listen: false)
-                                .addTodo(newCategoryTodo, widget.todoCategory);
+                        await Provider.of<TodoProvider>(context, listen: false)
+                            .addTodo(newCategoryTodo, widget.todoCategory);
 
-                            Navigator.pop(context);
-                          },
-                          child: Text('Create'),
-                          style: ElevatedButton.styleFrom(
-                              // primary: AppColors.MintGreen,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              elevation: 0,
-                              minimumSize: Size(221, 55),
-                              textStyle: TextStyle(fontSize: 18)),
-                        ),
-                      ],
+                        Navigator.pop(context);
+                      },
+                      child: Text('Create'),
+                      style: ElevatedButton.styleFrom(
+                          primary: Color(
+                              Provider.of<TodoProvider>(context, listen: false)
+                                  .todoCategories[Provider.of<TodoProvider>(
+                                          context,
+                                          listen: false)
+                                      .todoCategories
+                                      .indexWhere((element) =>
+                                          element.id == widget.todoCategory.id)]
+                                  .color),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(14),
+                          ),
+                          elevation: 0,
+                          minimumSize: Size(115, 45),
+                          textStyle: TextStyle(fontSize: 18)),
                     )
                   ],
                 ),
