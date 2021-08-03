@@ -48,7 +48,6 @@ class HabitsDBMethods {
         where: "habitID = ? and date = ?", whereArgs: [habit.id, dateString]);
 
     print(dateString);
-    print(newResult);
 
     if (newResult == 0) {
       newResult = await db.insert(
