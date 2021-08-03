@@ -262,40 +262,6 @@ class _TodoDetailScreenState extends State<TodoDetailScreen> {
                           type: MaterialType.transparency,
                           child: ListView.builder(
                             padding: EdgeInsets.all(0),
-                            // itemBuilder: (BuildContext context, int index) {
-                            //   DateTime currentDate = todoObject.tasks.keys.toList()[index];
-                            //   DateTime _now = DateTime.now();
-                            //   DateTime today = DateTime(_now.year, _now.month, _now.day);
-                            //   String dateString;
-                            //   if (currentDate.isBefore(today.subtract(Duration(days: 7)))) {
-                            //     dateString = DateFormat.yMMMMEEEEd().format(currentDate);
-                            //   } else if (currentDate.isBefore(today)) {
-                            //     dateString = "Previous - " + DateFormat.E().format(currentDate);
-                            //   } else if (currentDate.isAtSameMomentAs(today)) {
-                            //     dateString = "Today";
-                            //   } else if (currentDate.isAtSameMomentAs(today.add(Duration(days: 1)))) {
-                            //     dateString = "Tomorrow";
-                            //   } else {
-                            //     dateString = DateFormat.E().format(currentDate);
-                            //   }
-                            //   List<Widget> tasks = [Text(dateString)];
-                            //   var todoObject;
-                            //   todoObject.tasks[currentDate].forEach((task) {
-                            //     tasks.add(CustomCheckboxListTile(
-                            //       activeColor: todoObject.color,
-                            //       value: task.isCompleted(),
-                            //       onChanged: (value) {
-                            //         // setState(() {
-                            //         //   task.setComplete(value);
-                            //         // });
-                            //       },
-                            //       title: Text(task.task),
-                            //       secondary: Icon(Icons.alarm),
-                            //     ));
-                            //   });
-                            // },
-                            // itemCount: widget.todoObject.tasks.length,
-                            // itemCount: 1,
                             itemCount: widget.todoCategory.todoList!.length,
                             itemBuilder: (BuildContext context, int id) {
                               return TodoCard(
