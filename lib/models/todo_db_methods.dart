@@ -57,7 +57,7 @@ class TodosDBMethods {
 
   Future dayComplete(Todo todo) async {
     final db = await AppDatabase.instance.database;
-    // final String dateString = date.toString().substring(0, 10);
+   
     var newResult =
         await db.query(tableTodos, where: "id = ?", whereArgs: [todo.id]);
 
