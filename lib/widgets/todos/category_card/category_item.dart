@@ -160,6 +160,7 @@ class _TodoCategoryItemState extends State<TodoCategoryItem> {
                       color: Colors.transparent,
                       child: Text(
                         widget.todoCategory.name,
+                        overflow: TextOverflow.fade,
                         style: TextStyle(
                             color: AppColors.MainText, fontSize: 30.0),
                         softWrap: false,
