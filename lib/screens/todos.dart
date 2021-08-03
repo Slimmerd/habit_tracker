@@ -73,14 +73,15 @@ class _TodosScreenState extends State<TodosScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Today is ${DateFormat('d MMMM').format(DateTime.now())}',
+                Text('Today',
                     style: TextStyle(
-                      fontSize: 21,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
                       color: Colors.white,
                     )),
-                Text('You have 10 task due today',
+                Text('${DateFormat('d MMMM').format(DateTime.now())}',
                     style: TextStyle(
-                      fontSize: 18,
+                      fontSize: 28,
                       color: Colors.white,
                     )),
               ],
@@ -92,7 +93,7 @@ class _TodosScreenState extends State<TodosScreen> {
           Consumer<TodoProvider>(
             builder: (BuildContext context, value, Widget? child) {
               return Expanded(
-                flex: 5,
+                flex: 6,
                 child: ListView.builder(
                     scrollDirection: Axis.horizontal,
                     itemCount: value.todoCategories.length,
