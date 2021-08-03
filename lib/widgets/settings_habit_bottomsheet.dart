@@ -49,7 +49,7 @@ class _SettingsBottomSheet extends State<SettingsHabitBottomSheet> {
                       style: TextStyle(fontSize: 24, color: AppColors.MainText),
                       decoration: InputDecoration(
                           isDense: true,
-                          hintText: 'New todo name',
+                          hintText: 'Habit name',
                           border: InputBorder.none,
                           focusedBorder: InputBorder.none,
                           enabledBorder: InputBorder.none,
