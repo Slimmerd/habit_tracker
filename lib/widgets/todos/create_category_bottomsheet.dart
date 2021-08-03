@@ -68,6 +68,7 @@ class _CreateCategoryBottomSheetState extends State<CreateCategoryBottomSheet> {
                     Container(
                       margin: EdgeInsets.only(bottom: 10),
                       child: TextFormField(
+                        autofocus: true,
                         style: TextStyle(
                             fontSize: 24,
                             fontWeight: FontWeight.w400,

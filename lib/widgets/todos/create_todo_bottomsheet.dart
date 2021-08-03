@@ -52,7 +52,7 @@ class _CreateTodoBottomSheetState extends State<CreateTodoBottomSheet> {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 10, vertical: 2),
                       child: TextFormField(
-                        // autofocus: true,
+                        autofocus: true,
                         style:
                             TextStyle(fontSize: 24, color: AppColors.MainText),
                         decoration: InputDecoration(
