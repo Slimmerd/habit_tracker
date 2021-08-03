@@ -26,7 +26,7 @@ class _SettingsBottomSheet extends State<SettingsHabitBottomSheet> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Container(
-        height: MediaQuery.of(context).size.height * 0.40,
+        height: MediaQuery.of(context).size.height * 0.25,
         child: Container(
           decoration: BoxDecoration(
             color: AppColors.BackgroundMainColor,
@@ -36,82 +36,65 @@ class _SettingsBottomSheet extends State<SettingsHabitBottomSheet> {
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
             Container(
-              padding: EdgeInsets.only(top: 40, left: 20, bottom: 20),
+              padding:
+                  EdgeInsets.only(top: 40, left: 20, right: 20, bottom: 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'Habit settings',
-                    style: TextStyle(
-                        color: AppColors.MainText,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w400),
+                  Container(
+                    margin: EdgeInsets.only(bottom: 20),
+                    child: TextFormField(
+                      autofocus: true,
+                      initialValue: _title,
+                      style: TextStyle(fontSize: 24, color: AppColors.MainText),
+                      decoration: InputDecoration(
+                          isDense: true,
+                          hintText: 'New todo name',
+                          border: InputBorder.none,
+                          focusedBorder: InputBorder.none,
+                          enabledBorder: InputBorder.none,
+                          errorBorder: InputBorder.none,
+                          disabledBorder: InputBorder.none,
+                          hintStyle: TextStyle(color: AppColors.GrayText)),
+                      onChanged: (String value) async {
+                        setState(() => _title = value);
+                        final newHabit = Habit(
+                            id: widget.habit.id,
+                            title: _title,
+                            createdTime: widget.habit.createdTime,
+                            dayList: widget.habit.dayList);
+                        await Provider.of<HabitProvider>(context, listen: false)
+                            .update(newHabit);
+                      },
+                    ),
                   ),
+                  Container(
+                      child: Column(children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        _customElevatedButton(() async {
+                          await Provider.of<HabitProvider>(context,
+                                  listen: false)
+                              .delete(widget.habit);
+                          Navigator.pop(context);
+                          Navigator.pop(context);
+                        }, 'Delete'),
+                        _customElevatedButton(
+                          () async {
+                            await Provider.of<HabitProvider>(context,
+                                    listen: false)
+                                .resetProgress(widget.habit);
+                            Navigator.pop(context);
+                          },
+                          'Reset',
+                        )
+                      ],
+                    ),
+                  ])),
                 ],
               ),
             ),
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-              child: TextFormField(
-                initialValue: _title,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                      borderSide:
-                          const BorderSide(color: Colors.grey, width: 1.0)),
-                  enabledBorder: const OutlineInputBorder(
-                    borderSide:
-                        const BorderSide(color: Colors.grey, width: 1.0),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: AppColors.SelectedColor)),
-                  hintText: 'Habit',
-                  hintStyle: TextStyle(color: AppColors.MainText),
-                ),
-                style: TextStyle(color: AppColors.MainText),
-                onChanged: (String value) {
-                  setState(() => _title = value);
-                },
-              ),
-            ),
-            Container(
-                padding: EdgeInsets.only(top: 20, left: 20, right: 20),
-                child: Column(children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      _customElevatedButton(
-                        () async {
-                          final newHabit = Habit(
-                              id: widget.habit.id,
-                              title: _title,
-                              createdTime: widget.habit.createdTime,
-                              dayList: widget.habit.dayList);
-                          await Provider.of<HabitProvider>(context,
-                                  listen: false)
-                              .update(newHabit);
-                          Navigator.pop(context);
-                          Navigator.pop(context);
-                        },
-                        'Save',
-                      ),
-                      _customElevatedButton(() async {
-                        await Provider.of<HabitProvider>(context, listen: false)
-                            .delete(widget.habit);
-                        Navigator.pop(context);
-                        Navigator.pop(context);
-                      }, 'Delete'),
-                      _customElevatedButton(
-                        () async {
-                          await Provider.of<HabitProvider>(context,
-                                  listen: false)
-                              .resetProgress(widget.habit);
-                          Navigator.pop(context);
-                        },
-                        'Reset',
-                      )
-                    ],
-                  ),
-                ])),
           ]),
         ));
   }
@@ -122,9 +105,10 @@ class _SettingsBottomSheet extends State<SettingsHabitBottomSheet> {
       child: Text(text),
       style: ElevatedButton.styleFrom(
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: BorderRadius.circular(14),
           ),
           elevation: 0,
+          minimumSize: Size(115, 45),
           textStyle: TextStyle(fontSize: 18)),
     );
   }

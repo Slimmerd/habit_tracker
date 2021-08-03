@@ -17,7 +17,7 @@ class _CreateHabitBottomSheetState extends State<CreateHabitBottomSheet> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.40,
+      height: MediaQuery.of(context).size.height * 0.25,
       child: Container(
         decoration: BoxDecoration(
           color: AppColors.BackgroundMainColor,
@@ -34,72 +34,57 @@ class _CreateHabitBottomSheetState extends State<CreateHabitBottomSheet> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      'New habit',
-                      style: TextStyle(
-                          color: AppColors.MainText,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w400),
-                    ),
+                    Container(
+                      margin: EdgeInsets.only(bottom: 10),
+                      child: TextFormField(
+                        autofocus: true,
+                        style:
+                            TextStyle(fontSize: 24, color: AppColors.MainText),
+                        decoration: InputDecoration(
+                            isDense: true,
+                            hintText: 'New todo name',
+                            border: InputBorder.none,
+                            focusedBorder: InputBorder.none,
+                            enabledBorder: InputBorder.none,
+                            errorBorder: InputBorder.none,
+                            disabledBorder: InputBorder.none,
+                            hintStyle: TextStyle(color: AppColors.GrayText)),
+                        onSaved: (String? value) {
+                          _title = value!;
+                        },
+                      ),
+                    )
                   ],
                 ),
               ),
               Container(
-                margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                child: TextFormField(
-                  style: TextStyle(color: AppColors.MainText),
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                        borderSide:
-                            const BorderSide(color: Colors.grey, width: 1.0)),
-                    enabledBorder: const OutlineInputBorder(
-                      borderSide:
-                          const BorderSide(color: Colors.grey, width: 1.0),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: AppColors.SelectedColor)),
-                    hintText: 'Habit',
-                    hintStyle: TextStyle(color: AppColors.MainText),
-                  ),
-                  onSaved: (String? value) {
-                    _title = value!;
-                  },
-                ),
-              ),
-              Container(
-                padding: EdgeInsets.only(top: 20, left: 20),
                 child: Column(
                   children: [
-                    Row(
-                      children: [
-                        ElevatedButton(
-                          onPressed: () async {
-                            if (!_formKey.currentState!.validate()) {
-                              return;
-                            }
+                    ElevatedButton(
+                      onPressed: () async {
+                        if (!_formKey.currentState!.validate()) {
+                          return;
+                        }
 
-                            _formKey.currentState!.save();
+                        _formKey.currentState!.save();
 
-                            final newHabit = Habit(
-                                title: _title,
-                                createdTime: DateTime.now(),
-                                dayList: []);
+                        final newHabit = Habit(
+                            title: _title,
+                            createdTime: DateTime.now(),
+                            dayList: []);
 
-                            await Provider.of<HabitProvider>(context,
-                                    listen: false)
-                                .add(newHabit);
-                            Navigator.pop(context);
-                          },
-                          child: Text('Create'),
-                          style: ElevatedButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              elevation: 0,
-                              minimumSize: Size(221, 55),
-                              textStyle: TextStyle(fontSize: 18)),
-                        ),
-                      ],
+                        await Provider.of<HabitProvider>(context, listen: false)
+                            .add(newHabit);
+                        Navigator.pop(context);
+                      },
+                      child: Text('Create'),
+                      style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(14),
+                          ),
+                          elevation: 0,
+                          minimumSize: Size(115, 45),
+                          textStyle: TextStyle(fontSize: 18)),
                     )
                   ],
                 ),
