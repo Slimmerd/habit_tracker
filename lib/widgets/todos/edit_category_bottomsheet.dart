@@ -102,21 +102,22 @@ class _CategoryEditBottomSheetState extends State<CategoryEditBottomSheet> {
                               child: Row(
                                 children: [
                                   Expanded(
+                                    flex: 5,
                                     child: Container(
-                                      height: 24,
+                                      height: 30,
                                       child: TextFormField(
                                           initialValue: _todoCategory.name,
                                           style: TextStyle(
                                               fontSize: 24,
-                                              fontWeight: FontWeight.w400,
                                               color: AppColors.MainText),
                                           decoration: InputDecoration(
                                             hintText: 'Category name',
                                             hintStyle: TextStyle(
                                                 color: AppColors.GrayText),
                                             border: InputBorder.none,
+                                            isDense: true,
                                             contentPadding: EdgeInsets.fromLTRB(
-                                                0, 0, 0, 10),
+                                                0, 0, 0, 0),
                                           ),
                                           onChanged: (String value) =>
                                               updateTodo(value)),

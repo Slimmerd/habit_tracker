@@ -92,21 +92,27 @@ class _TodoOpenBottomSheetState extends State<TodoOpenBottomSheet> {
                                 ),
                               ),
                               Expanded(
+                                flex: 5,
                                 child: Container(
                                   height: 24,
                                   child: TextFormField(
                                       initialValue: widget.todo.name,
                                       style: TextStyle(
                                           fontSize: 18,
-                                          fontWeight: FontWeight.w400,
+
                                           color: AppColors.MainText),
                                       decoration: InputDecoration(
+                                        isDense: true,
                                         hintText: 'Task name',
                                         hintStyle: TextStyle(
                                             color: AppColors.GrayText),
                                         border: InputBorder.none,
+                                        focusedBorder: InputBorder.none,
+                                        enabledBorder: InputBorder.none,
+                                        errorBorder: InputBorder.none,
+                                        disabledBorder: InputBorder.none,
                                         contentPadding:
-                                            EdgeInsets.fromLTRB(0, 0, 0, 10),
+                                            EdgeInsets.fromLTRB(0, 0, 0, 0),
                                       ),
                                       onChanged: (String value) =>
                                           updateTodo(value)),
