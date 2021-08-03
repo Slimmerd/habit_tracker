@@ -11,8 +11,8 @@ class HabitsScreen extends StatefulWidget {
   _HabitsScreenState createState() => _HabitsScreenState();
 }
 
-class _HabitsScreenState extends State<HabitsScreen> with AutomaticKeepAliveClientMixin{
-
+class _HabitsScreenState extends State<HabitsScreen>
+    with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
     super.build(context);
