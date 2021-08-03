@@ -67,7 +67,6 @@ class _CategoryEditBottomSheetState extends State<CategoryEditBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
-
     return Consumer<TodoProvider>(
       builder: (BuildContext context, value, Widget? child) {
         _todoCategory = value.todoCategories[value.todoCategories
@@ -106,6 +105,7 @@ class _CategoryEditBottomSheetState extends State<CategoryEditBottomSheet> {
                                     child: Container(
                                       height: 30,
                                       child: TextFormField(
+                                          autofocus: true,
                                           initialValue: _todoCategory.name,
                                           style: TextStyle(
                                               fontSize: 24,
@@ -116,8 +116,8 @@ class _CategoryEditBottomSheetState extends State<CategoryEditBottomSheet> {
                                                 color: AppColors.GrayText),
                                             border: InputBorder.none,
                                             isDense: true,
-                                            contentPadding: EdgeInsets.fromLTRB(
-                                                0, 0, 0, 0),
+                                            contentPadding:
+                                                EdgeInsets.fromLTRB(0, 0, 0, 0),
                                           ),
                                           onChanged: (String value) =>
                                               updateTodo(value)),
