@@ -21,7 +21,7 @@ class _TodoCategoryItemState extends State<TodoCategoryItem> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(left: 20, bottom: 20),
+      margin: EdgeInsets.only(left: 20, bottom: 20, right: 15),
       decoration:
           BoxDecoration(borderRadius: BorderRadius.circular(10.0), boxShadow: [
         BoxShadow(
@@ -32,14 +32,13 @@ class _TodoCategoryItemState extends State<TodoCategoryItem> {
       height: 300.0,
       width: 260,
       child: InkWell(
+        borderRadius: BorderRadius.circular(10),
         onTap: () {
           Navigator.of(context).push(
             PageRouteBuilder(
                 pageBuilder: (BuildContext context, Animation<double> animation,
                         Animation<double> secondaryAnimation) =>
-                    TodoDetailScreen(
-                      todoCategory: widget.todoCategory,
-                    ),
+                    TodoDetailScreen(todoCategory: widget.todoCategory),
                 transitionDuration: Duration(milliseconds: 1000),
                 reverseTransitionDuration: Duration(milliseconds: 1000)),
           );
@@ -47,7 +46,7 @@ class _TodoCategoryItemState extends State<TodoCategoryItem> {
         child: Stack(
           children: <Widget>[
             Hero(
-              tag: "_background",
+              tag: '_background_${widget.todoCategory.id}',
               child: Container(
                 decoration: BoxDecoration(
                   color: AppColors.GrayLight,
@@ -70,7 +69,7 @@ class _TodoCategoryItemState extends State<TodoCategoryItem> {
                         Stack(
                           children: <Widget>[
                             Hero(
-                              tag: "_backIcon",
+                              tag: '_backIcon_${widget.todoCategory.id}',
                               child: Material(
                                 type: MaterialType.transparency,
                                 child: Container(
@@ -82,7 +81,7 @@ class _TodoCategoryItemState extends State<TodoCategoryItem> {
                               ),
                             ),
                             Hero(
-                              tag: "_icon",
+                              tag: '_icon_${widget.todoCategory.id}',
                               child: Container(
                                 decoration: BoxDecoration(
                                   color: Colors.transparent,
@@ -93,13 +92,15 @@ class _TodoCategoryItemState extends State<TodoCategoryItem> {
                                       width: 1.0),
                                 ),
                                 child: Padding(
-                                  padding: EdgeInsets.all(8.0),
+                                  padding: EdgeInsets.all(12.0),
                                   child: Icon(
-                                      IconData(widget.todoCategory.icon,
-                                          fontFamily: CupertinoIcons.iconFont,
-                                          fontPackage:
-                                              CupertinoIcons.iconFontPackage),
-                                      color: Color(widget.todoCategory.color)),
+                                    IconData(widget.todoCategory.icon,
+                                        fontFamily: CupertinoIcons.iconFont,
+                                        fontPackage:
+                                            CupertinoIcons.iconFontPackage),
+                                    color: Color(widget.todoCategory.color),
+                                    size: 32,
+                                  ),
                                 ),
                               ),
                             ),
@@ -107,11 +108,12 @@ class _TodoCategoryItemState extends State<TodoCategoryItem> {
                         ),
                         Spacer(),
                         Hero(
-                          tag: "_more_vert",
+                          tag: '_more_vert_${widget.todoCategory.id}',
                           child: Material(
                             color: Colors.transparent,
                             type: MaterialType.transparency,
                             child: IconButton(
+                              splashRadius: 14,
                               icon: Icon(
                                 Icons.more_vert,
                                 color: Colors.grey,
@@ -142,7 +144,7 @@ class _TodoCategoryItemState extends State<TodoCategoryItem> {
                     ),
                   ),
                   Hero(
-                    tag: "_number_of_tasks",
+                    tag: '_number_of_tasks_${widget.todoCategory.id}',
                     child: Material(
                         color: Colors.transparent,
                         child: Text(
@@ -153,7 +155,7 @@ class _TodoCategoryItemState extends State<TodoCategoryItem> {
                   ),
                   Spacer(),
                   Hero(
-                    tag: "_title",
+                    tag: '_title_${widget.todoCategory.id}',
                     child: Material(
                       color: Colors.transparent,
                       child: Text(
@@ -166,13 +168,13 @@ class _TodoCategoryItemState extends State<TodoCategoryItem> {
                   ),
                   Spacer(),
                   Hero(
-                      tag: '_todos_list',
+                      tag: '_todos_list_${widget.todoCategory.id}',
                       child: SizedBox(
                         height: 1,
                         width: 1,
                       )),
                   Hero(
-                    tag: "_progress_bar",
+                    tag: '_progress_bar_${widget.todoCategory.id}',
                     child: Material(
                       color: Colors.transparent,
                       child: Row(
@@ -216,6 +218,12 @@ class _TodoCategoryItemState extends State<TodoCategoryItem> {
                       ),
                     ),
                   ),
+                  Hero(
+                      tag: '_add_button_${widget.todoCategory.id}',
+                      child: SizedBox(
+                        height: 1,
+                        width: 1,
+                      )),
                 ],
               ),
             ),
