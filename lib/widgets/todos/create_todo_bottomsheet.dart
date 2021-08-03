@@ -56,7 +56,7 @@ class _CreateTodoBottomSheetState extends State<CreateTodoBottomSheet> {
                         style:
                             TextStyle(fontSize: 24, color: AppColors.MainText),
                         decoration: InputDecoration(
-                          isDense: true,
+                            isDense: true,
                             hintText: 'New todo name',
                             border: InputBorder.none,
                             focusedBorder: InputBorder.none,
