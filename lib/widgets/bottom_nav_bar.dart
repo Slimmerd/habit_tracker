@@ -26,15 +26,7 @@ class BottomNavBar extends StatelessWidget {
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.assignment_turned_in),
-          label: 'School',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.leaderboard),
-          label: 'Business',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.school),
-          label: 'School',
+          label: 'Todos',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.settings),
