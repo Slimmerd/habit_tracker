@@ -4,7 +4,7 @@ import 'package:habit_tracker/constants/colors.dart';
 import 'package:habit_tracker/models/todo_category_model.dart';
 import 'package:habit_tracker/providers/todo_provider.dart';
 import 'package:habit_tracker/screens/todo_details.dart';
-import 'package:habit_tracker/widgets/todos/edit_category_bottomsheet.dart';
+import 'package:habit_tracker/widgets/todos/category_card/edit_category_bottomsheet.dart';
 import 'package:provider/provider.dart';
 
 class TodoCategoryItem extends StatefulWidget {

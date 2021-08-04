@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:habit_tracker/constants/colors.dart';
 import 'package:habit_tracker/providers/todo_provider.dart';
 import 'package:habit_tracker/widgets/todos/category_card/category_item.dart';
-import 'package:habit_tracker/widgets/todos/create_category_bottomsheet.dart';
+import 'package:habit_tracker/widgets/todos/category_card/create_category_bottomsheet.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 

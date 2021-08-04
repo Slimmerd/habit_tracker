@@ -24,7 +24,6 @@ class _SettingsBottomSheet extends State<SettingsHabitBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Container(
         height: MediaQuery.of(context).size.height * 0.25,
         child: Container(

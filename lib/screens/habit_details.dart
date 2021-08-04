@@ -4,7 +4,7 @@ import 'package:habit_tracker/models/habit_model.dart';
 import 'package:habit_tracker/providers/habit_provider.dart';
 import 'package:habit_tracker/widgets/habits/calendar_card/calendar_card.dart';
 import 'package:habit_tracker/widgets/habits/stats_card/stats_card.dart';
-import 'package:habit_tracker/widgets/settings_habit_bottomsheet.dart';
+import 'package:habit_tracker/widgets/habits/settings_habit_bottomsheet.dart';
 import 'package:provider/provider.dart';
 
 class HabitDetailsScreen extends StatefulWidget {
@@ -19,8 +19,8 @@ class _HabitDetailsScreenState extends State<HabitDetailsScreen> {
 
     return Consumer<HabitProvider>(
       builder: (BuildContext context, value, Widget? child) {
-        Habit _habit = value.habits[value.habits
-            .indexWhere((element) => element.id == habit.id)];
+        Habit _habit = value.habits[
+            value.habits.indexWhere((element) => element.id == habit.id)];
 
         return Scaffold(
           backgroundColor: AppColors.BackgroundMainColor,

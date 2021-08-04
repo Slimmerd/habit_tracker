@@ -24,7 +24,7 @@ class _CreateCategoryBottomSheetState extends State<CreateCategoryBottomSheet> {
     IconData? icon = await FlutterIconPicker.showIconPicker(context,
         iconPackMode: IconPack.cupertino);
 
-    setState(() => _icon = icon != null ? icon: _icon);
+    setState(() => _icon = icon != null ? icon : _icon);
   }
 
   _pickColor() async {
@@ -45,7 +45,6 @@ class _CreateCategoryBottomSheetState extends State<CreateCategoryBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
-
     return Container(
       height: MediaQuery.of(context).size.height * 0.4,
       child: Container(

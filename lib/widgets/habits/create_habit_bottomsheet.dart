@@ -30,7 +30,8 @@ class _CreateHabitBottomSheetState extends State<CreateHabitBottomSheet> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Container(
-                padding: EdgeInsets.only(top: 40, left: 20, right: 20, bottom: 20),
+                padding:
+                    EdgeInsets.only(top: 40, left: 20, right: 20, bottom: 20),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
