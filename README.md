@@ -2,9 +2,5 @@
 
 
 # Todo 
-- Update habit (name)
-- Habit color
-- Make notification
-- Reset habit progress
-- Delete habit inside?
+- Make notifications
 - Do habit multiple times in a day
